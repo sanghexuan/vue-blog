@@ -1,26 +1,3 @@
-<p align="center">
-    <a href="http://www.maxiaoqu.com/">
-        <img width="300" src="http://www.maxiaoqu.com/maxiaoqu.png">
-    </a>
-</p>
-
-<h2>
-    vue-blog
-    <h4>一个模仿掘金的博客,自适应Pc端+手机端，基于vue-cli3+搭建，喜欢的话，欢迎star</h4>
-</h2>
-
-## 相关链接
-
-- [gitHub 地址-Vue 版本](https://github.com/maxiaoqu/vue-blog)
-- [gitHub 地址-React 版本](https://github.com/maxiaoqu/react-blog)
-- [案例地址](http://github.maxiaoqu.com/vue-blog/)
-
-## 主要维护人员
-
-| 人员   | github 账号                             | 头像                                                            | 作者博客                 | 作者网站                | 联系邮箱           |
-| ------ | --------------------------------------- | --------------------------------------------------------------- | ------------------------ | ----------------------- | ------------------ |
-| 码小趣 | [maxiaoqu](https://github.com/maxiaoqu) | ![](https://avatars1.githubusercontent.com/u/25891598?s=60&v=4) | http://blog.maxiaoqu.com | http://www.maxiaoqu.com | maxiaoqu@gmail.com |
-
 ## 使用技术
 
 - vue
