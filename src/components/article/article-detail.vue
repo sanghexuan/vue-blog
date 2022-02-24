@@ -1,18 +1,20 @@
 <template>
   <article class="article-detail">
+    <!-- 标题 -->
+    <h1 class="article-detail-title">{{ this.data.body }}</h1>
     <div class="article-detail-info">
       <img class="article-userImg" src="../../assets/img/logo/min-logo.png" />
       <div class="article-info">
         <h4 class="article-info-name">用户名称<b>Lv3</b></h4>
         <div class="article-info-meg">
-          <time>2020.1.1</time>
+          <time>{{ this.data.time }}</time>
           <span class="views-count">阅读 9090</span>
         </div>
       </div>
     </div>
-    <h4 class="article-detail-title">文章标题</h4>
+    <h4>{{ this.data.title }}</h4>
     <!-- <div class="article-detail-content"> -->
-    <!-- 文章内容 -->
+
     <!-- <markdown-preview></markdown-preview> -->
     <!-- </div> -->
   </article>
@@ -25,20 +27,21 @@ import mdFile from "../../../README.md";
 export default {
   name: "article-detail",
   components: { MarkdownPreview },
+  props: ["data"],
   data() {
     return {
       mdData: mdFile,
-      data: [],
     };
   },
+  mounted() {},
 };
 </script>
 
 <style lang="less" scoped>
 .article-detail {
   margin-bottom: 36px;
-  padding: 24px 24px 0;
-
+  padding: 15px 24px 0;
+  height: 1100px;
   &-info {
     display: flex;
     align-items: center;

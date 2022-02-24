@@ -1,6 +1,6 @@
 <template>
   <div class="index">
-    <article-list :inputname="messages"></article-list>
+    <article-list :messages="messages"></article-list>
     <article-detail></article-detail>
   </div>
 </template>

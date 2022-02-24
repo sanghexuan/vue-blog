@@ -60,7 +60,6 @@ export default {
     padding: 0 8px;
     cursor: pointer;
     outline: none;
-    margin-left: 15px;
   }
 }
 

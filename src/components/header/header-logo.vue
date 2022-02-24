@@ -1,6 +1,8 @@
 <template>
   <div class="header-logo" @click="gotoIndex">
-    <img class="header-logo-min" src="../../assets/img/logo/min-logo.png" />
+    <a class="avatar">
+      <img class="header-logo-min" src="../../assets/img/logo/min-logo.png"
+    /></a>
   </div>
 </template>
 

@@ -1,7 +1,9 @@
 <template>
   <div class="page">
     <div class="page-list">
-      <article-detail></article-detail>
+      <!-- 标题以及文章显示 -->
+      <article-detail :data="data"></article-detail>
+      <!-- 评论 -->
       <article-comment></article-comment>
     </div>
     <div class="page-sidebarx" id="sidebar">
@@ -30,7 +32,7 @@ import SidebarUser from "../../components/sidebar/sidebar-user";
 import SidebarArticle from "../../components/sidebar/sidebar-article";
 import ArticleList from "../../components/article/article-list";
 import NavArticle from "../../components/navbar/nav-article";
-import bus from "../../index";
+
 export default {
   name: "articleDetails",
   components: {
@@ -49,10 +51,9 @@ export default {
     };
   },
   mounted() {
-    var vm = this;
-    bus.$on("message", (value) => {
-      vm.data = value;
-    });
+    this.data = JSON.parse(localStorage.getItem("books")).reverse()[
+      this.$route.params.id
+    ];
   },
   methods: {},
 };

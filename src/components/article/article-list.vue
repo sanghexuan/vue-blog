@@ -8,7 +8,7 @@
     >
       <div class="article-list-item-content">
         <ul class="article-info">
-          <li class="article-info-row info-meta" @onClick="messagesprop">
+          <li class="article-info-row info-meta">
             <ul class="info-meta-list">
               <li class="item item-user">发布人名称</li>
               <li class="item item-date">发布时间 {{ item.time }}</li>
@@ -39,7 +39,7 @@
 
 <script>
 import IconFa from "../icon/icon-fa";
-import bus from "../../index";
+
 export default {
   name: "article-list",
   data() {
@@ -65,17 +65,13 @@ export default {
         path: "/server/articleDetails/" + id,
       });
     },
-    messagesprop: function () {
-      bus.$emit("message", this.data);
-    },
+
     // 点赞
     thumbsUp() {
       return this.math++;
     },
     // 收藏
-    starArticle() {
-      //   console.log("收藏");
-    },
+    starArticle() {},
   },
   mounted() {
     this.data = JSON.parse(localStorage.getItem("books")).reverse();

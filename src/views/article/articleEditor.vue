@@ -17,11 +17,7 @@ export default {
       handbook: "",
     };
   },
-  watch: {
-    // handbook: (val) => {
-    //   console.log(val);
-    // },
-  },
+  watch: {},
   mounted() {},
   methods: {
     add() {
