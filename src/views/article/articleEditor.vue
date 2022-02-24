@@ -1,31 +1,40 @@
 <template>
-    <div class="page">
-        <header-editor></header-editor>
-        <markdownEditor class="markdownEditor" v-model="handbook"></markdownEditor>
-    </div>
+  <div class="page">
+    <header-editor @click="add" :handbook="handbook"></header-editor>
+    <markdownEditor class="markdownEditor" v-model="handbook"></markdownEditor>
+  </div>
 </template>
 
 <script>
-    import HeaderEditor from "../../components/header/header-editor";
-    import markdownEditor from '../../components/markdown/markdown-editor';
+import HeaderEditor from "../../components/header/header-editor";
+import markdownEditor from "../../components/markdown/markdown-editor";
 
-    export default {
-        name: "articleEditor",
-        components: {HeaderEditor, markdownEditor},
-        data() {
-            return {
-                handbook: "## 欢迎使用码小趣MarkDown编辑器"
-            };
-        },
-        mounted() {
-        }
-    }
+export default {
+  name: "articleEditor",
+  components: { HeaderEditor, markdownEditor },
+  data() {
+    return {
+      handbook: "",
+    };
+  },
+  watch: {
+    // handbook: (val) => {
+    //   console.log(val);
+    // },
+  },
+  mounted() {},
+  methods: {
+    add() {
+      this.$emit("add", this.handbook);
+    },
+  },
+};
 </script>
 
 <style lang="less" scoped>
-    .markdownEditor {
-        width: 100%;
-        height: 100%;
-        z-index: 9;
-    }
+.markdownEditor {
+  width: 100%;
+  height: 100%;
+  z-index: 9;
+}
 </style>

@@ -1,17 +1,19 @@
 <template>
-    <div class="article-typetag">
-        article-typetag
-    </div>
+  <div class="article-typetag">article-typetag</div>
 </template>
 
 <script>
-    export default {
-        name: "article-typetag"
-    }
+export default {
+  name: "article-typetag",
+  data() {
+    return {
+      messages: "1111",
+    };
+  },
+};
 </script>
 
 <style lang="less" scoped>
-    .article-typetag {
-
-    }
+.article-typetag {
+}
 </style>
