@@ -1,5 +1,5 @@
 <template>
-  <div class="header-logo" @click="gotoIndex">
+  <div class="header-logo">
     <a class="avatar">
       <img class="header-logo-min" src="../../assets/img/logo/min-logo.png"
     /></a>
@@ -11,9 +11,9 @@ export default {
   name: "header-logo",
   methods: {
     gotoIndex() {
-      this.$router.push({
-        name: "index",
-      });
+      // this.$router.push({
+      //   name: "index",
+      // });
     },
   },
 };

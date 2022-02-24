@@ -8,14 +8,14 @@
       </a>
     </div>
     <ul class="dropdown-menua" :style="active">
-      <li>
-        <a href=""><i></i><span>我的主页</span></a>
+      <li @click="routechange">
+        <a><i></i><span>我的主页</span></a>
       </li>
       <li>
-        <a href=""><i></i><span>设置</span></a>
+        <a><i></i><span>设置</span></a>
       </li>
       <li>
-        <a href=""><i></i><span>退出</span></a>
+        <a><i></i><span>退出</span></a>
       </li>
     </ul>
   </div>
@@ -30,16 +30,16 @@ export default {
     };
   },
   methods: {
-    // gotoIndex() {
-    //   this.$router.push({
-    //     name: "index",
-    //   });
-    // },
     mouseOver() {
       this.active = "display: block";
     },
     mouseLeave() {
       this.active = "";
+    },
+    routechange() {
+      this.$router.push({
+        name: "use",
+      });
     },
   },
 };

@@ -3,15 +3,23 @@
     <li
       class="nav-article-like nav-article-item"
       :Num="this.data1"
-      @onClick="add"
+      @click="add('data1')"
     >
       <icon-fa class="article-icon" icon="thumbs-up"></icon-fa>
       <div class="like-num-wrapper"></div>
     </li>
-    <li class="nav-article-like nav-article-item" Num="88">
+    <li
+      class="nav-article-like nav-article-item"
+      :Num="this.data2"
+      @click="add('data2')"
+    >
       <icon-fa class="article-icon" icon="star"></icon-fa>
     </li>
-    <li class="nav-article-like nav-article-item" Num="66">
+    <li
+      class="nav-article-like nav-article-item"
+      :Num="this.data3"
+      @click="add"
+    >
       <icon-fa class="article-icon" icon="comments"></icon-fa>
     </li>
     <li class="nav-article-title">分享</li>
@@ -41,13 +49,17 @@ export default {
     };
   },
   methods: {
-    add: function () {
-      this.data1++;
+    add: function (el) {
+      if (el == "data1") {
+        this.data1++;
+      } else if (el == "data2") {
+        this.data2++;
+      } else {
+        this.data3++;
+      }
     },
   },
-  mounted() {
-    console.log(this.data1);
-  },
+  mounted() {},
 };
 </script>
 
@@ -92,11 +104,11 @@ export default {
       text-align: center;
       line-height: 1;
       white-space: nowrap;
+      background-color: #c2c8d1;
       color: #fff;
-      background-color: #e7485e;
       border-radius: 4px;
       transform-origin: left top;
-      transform: scale(0.75);
+      transform: scale(0.85);
     }
   }
 
