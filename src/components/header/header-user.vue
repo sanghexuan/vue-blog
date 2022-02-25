@@ -14,11 +14,19 @@ import UserLogo from "../user/user-logo";
 export default {
   name: "header-user",
   components: { UserLogo },
+  data() {
+    return {
+      showModal: false,
+    };
+  },
   methods: {
     articleEditor() {
       this.$router.push({
         name: "articleEditor",
       });
+    },
+    login() {
+      this.$store.commit("changeshowModal");
     },
   },
 };

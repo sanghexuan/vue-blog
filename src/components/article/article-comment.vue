@@ -1,6 +1,8 @@
 <template>
   <div class="article-comment comment">
     <div class="comment-title">文章点评</div>
+
+    <!-- 评论模块 -->
     <ul class="comment-list">
       <li class="comment-list-item" v-for="item in 5" :key="item">
         <img class="user-img" src="../../assets/img/logo/min-logo.png" />
@@ -8,18 +10,33 @@
           <div class="user-comment-meg">
             <h4 class="user-name">用户名称{{ item }}<b>Lv3</b></h4>
           </div>
+          <!-- -- -->
+
+          <!-- -- -->
           <div class="user-comment-conntent">
             评论的内容
-            <a v-if="item % 2 != 0" href="javascript:void(0)">
+            <!-- <a v-if="item % 2 != 0" href="javascript:void(0)">
               <icon-fa class="icon-link" icon="link"></icon-fa>
-            </a>
+            </a> -->
           </div>
           <div class="user-comment-reply">
             <time>2020-02-02</time>
             <div class="action-box">
               <span> <icon-fa icon="trash"></icon-fa>删除 </span>
               <span> <icon-fa icon="thumbs-up"></icon-fa>点赞 </span>
-              <span> <icon-fa icon="comments"></icon-fa>评论 </span>
+              <span @click="showModal = true">
+                <icon-fa icon="comments"></icon-fa>评论
+              </span>
+            </div>
+          </div>
+          <div>
+            <textarea class="pop" v-if="showModal"></textarea>
+
+            <div v-if="showModal">
+              <button @click="" class="btn" style="margin-right: 5px">
+                发布
+              </button>
+              <button @click="showModal = false" class="btn">取消</button>
             </div>
           </div>
           <ul class="user-comment-sub" v-if="item % 2 == 0">
@@ -43,7 +60,23 @@
                   <div class="action-box">
                     <span> <icon-fa icon="trash"></icon-fa>删除 </span>
                     <span> <icon-fa icon="thumbs-up"></icon-fa>点赞 </span>
-                    <span> <icon-fa icon="comments"></icon-fa>评论 </span>
+                    <span @click="showModal = true">
+                      <icon-fa
+                        icon="comments"
+                        @click="showModal = true"
+                      ></icon-fa
+                      >评论
+                    </span>
+                  </div>
+                </div>
+                <div>
+                  <textarea class="pop" v-if="showModal"></textarea>
+
+                  <div v-if="showModal">
+                    <button @click="" class="btn" style="margin-right: 5px">
+                      发布
+                    </button>
+                    <button @click="showModal = false" class="btn">取消</button>
                   </div>
                 </div>
               </div>
@@ -62,7 +95,10 @@ export default {
   name: "article-comment",
   components: { IconFa },
   data() {
-    return { data: [] };
+    return { data: [], showModal: false };
+  },
+  methods: {
+    clickcomment() {},
   },
   mounted() {},
 };
@@ -74,6 +110,19 @@ export default {
   margin: 0 24px 36px;
   position: relative;
   border-top: 2px dashed #eee;
+
+  .pop {
+    background-color: #fff;
+    border: 2px dashed #eee;
+    width: 100%;
+    height: 80px;
+  }
+  .btn {
+    background-color: #fff;
+    border-radius: 4px;
+    border: 1px solid #f8f8f8;
+    padding: 4px 12px;
+  }
 
   &-title {
     color: #8a9aa9;
