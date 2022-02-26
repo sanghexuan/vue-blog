@@ -12,7 +12,9 @@
             <ul class="info-meta-list">
               <li class="item item-user">发布人名称</li>
               <li class="item item-date">发布时间 {{ item.time }}</li>
-              <li class="item item-type">类别{{ inputName }}</li>
+              <li class="item item-type">
+                类别 {{ item.type ? item.type : "暂无" }}
+              </li>
             </ul>
           </li>
           <li class="article-info-row info-title">

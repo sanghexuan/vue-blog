@@ -31,7 +31,6 @@
           </div>
           <div>
             <textarea class="pop" v-if="showModal"></textarea>
-
             <div v-if="showModal">
               <button @click="" class="btn" style="margin-right: 5px">
                 发布
@@ -71,7 +70,6 @@
                 </div>
                 <div>
                   <textarea class="pop" v-if="showModal"></textarea>
-
                   <div v-if="showModal">
                     <button @click="" class="btn" style="margin-right: 5px">
                       发布

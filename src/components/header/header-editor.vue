@@ -8,6 +8,14 @@
       <div class="header-editor-header-input">
         <input placeholder="请输入文章标题...." maxlength="80"  @change="change($event)"></input>    
       </div>
+      <div>
+        <select @change="onchange($event)">
+          <option value="web">前端开发</option>
+          <option value="java">java后段</option>
+          <option value="others">others其他</option>
+          <option value="day">日记</option>
+         </select>
+      </div>
       <div class="header-editor-header-tools">
         <button class="addActicle1" @click="add">发布</button>
         <button class="addActicle2" @click="back">取消</button>
@@ -23,7 +31,8 @@ export default {
   props: ["handbook"],
   data() {
     return {
-      hook: "",   
+      hook: "",
+      hook1: "",   
       data: {}
     }
   },
@@ -32,11 +41,15 @@ export default {
       // 标题
       this.hook = e.target.value;
     },
+     onchange(e) {
+      this.hook1 = e.target.value
+    },
     add() {
     var dayjs = require('dayjs')
     const nowtime = dayjs().format("YYYY MM.DD HH:mm:ss");
      this.data["title"] = this.handbook
      this.data["body"] = this.hook
+     this.data["type"] = this.hook1
      this.data["time"] = nowtime
     const localData = localStorage.getItem('books') === null ? "[]" : localStorage.getItem('books')
     const obj = JSON.parse(localData)
@@ -48,7 +61,11 @@ export default {
     },
     back() {
       window.history.back();
-    }
+    },
+   
+  },
+  mounted() {
+   
   },
  watch: {
   
