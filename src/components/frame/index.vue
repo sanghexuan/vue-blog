@@ -100,10 +100,15 @@ export default {
 .pop {
   background-color: #fff;
   position: fixed;
-  top: 238px;
-  left: 300px;
-  width: calc(100% - 604px);
-  height: calc(50% - 135px);
+  top: 36%;
+  left: 42%;
+  width: 300px;
+  height: 250px;
   z-index: 2;
+}
+@media (max-width: 720px) {
+  .pop {
+    left: 25%;
+  }
 }
 </style>
