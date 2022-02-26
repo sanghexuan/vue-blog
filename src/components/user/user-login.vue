@@ -33,7 +33,11 @@ export default {
 };
 </script>
 
+<<<<<<< HEAD
 <style scoped>
+=======
+<style lang="scss" scoped>
+>>>>>>> e7938e2a1460b24af164123c47f6ca3a8e7903e5
 .name {
   font-size: 1rem;
   margin: 35px 0 12px 1rem;
@@ -82,9 +86,15 @@ export default {
   background-color: #fff;
   position: fixed;
   top: 36%;
+<<<<<<< HEAD
   left: 42%;
   width: 300px;
   height: 250px;
+=======
+  left: 40%;
+  width: 300px;
+  height: 260px;
+>>>>>>> e7938e2a1460b24af164123c47f6ca3a8e7903e5
   z-index: 2;
 }
 @media (max-width: 720px) {
