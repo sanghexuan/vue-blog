@@ -73,9 +73,7 @@
                   <textarea class="pop" v-if="showModal"></textarea>
 
                   <div v-if="showModal">
-                    <button @click="" class="btn" style="margin-right: 5px">
-                      发布
-                    </button>
+                    <button class="btn" style="margin-right: 5px">发布</button>
                     <button @click="showModal = false" class="btn">取消</button>
                   </div>
                 </div>
