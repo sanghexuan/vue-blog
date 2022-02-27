@@ -5,6 +5,45 @@
       v-for="(item, index) in data"
       :key="index"
       @click="articleDetails(index)"
+      v-show="item.type == articleDate"
+    >
+      <div class="article-list-item-content">
+        <ul class="article-info">
+          <li class="article-info-row info-meta">
+            <ul class="info-meta-list">
+              <li class="item item-user">发布人名称</li>
+              <li class="item item-date">发布时间 {{ item.time }}</li>
+              <li class="item item-type">
+                类别 {{ item.type ? item.type : "暂无" }}
+              </li>
+            </ul>
+          </li>
+          <li class="article-info-row info-title">
+            <h4>{{ item.body }}</h4>
+          </li>
+          <li class="info-title">
+            <h2>{{ item.title }}</h2>
+          </li>
+          <li class="article-info-row info-action">
+            <span> <icon-fa icon="eye"></icon-fa>{{ math2 }}</span>
+            <span> <icon-fa icon="comments"></icon-fa>{{ math3 }} </span>
+            <span class="action-active" @click.stop="thumbsUp">
+              <icon-fa icon="thumbs-up" @onClick="thumbsUp"></icon-fa>{{ math }}
+            </span>
+          </li>
+        </ul>
+      </div>
+    </li>
+
+    <li
+      class="article-list-item"
+      v-for="(item, index) in data"
+      :key="index"
+      @click="articleDetails(index)"
+      v-show="
+        articleDate == 'recommend' ||
+        ['java', 'web', 'other'].includes(item.type)
+      "
     >
       <div class="article-list-item-content">
         <ul class="article-info">
@@ -50,7 +89,7 @@ export default {
       math: 10,
     };
   },
-  props: ["messages"],
+  props: ["messages", "articleDate"],
   components: { IconFa },
   computed: {
     math2: function () {

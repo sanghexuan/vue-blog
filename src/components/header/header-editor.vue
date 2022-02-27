@@ -12,8 +12,8 @@
         <select @change="onchange($event)">
           <option value="web">前端开发</option>
           <option value="java">java后段</option>
-          <option value="others">others其他</option>
-          <option value="day">日记</option>
+          <option value="other">others其他</option>
+         
          </select>
       </div>
       <div class="header-editor-header-tools">

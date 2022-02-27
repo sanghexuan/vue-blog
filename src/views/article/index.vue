@@ -3,7 +3,7 @@
     <!-- 左边栏 -->
     <div class="page-list">
       <!-- 传入props 数据给推荐 前端开发 java开发 -->
-      <article-list></article-list>
+      <article-list :articleDate="articleDate"></article-list>
     </div>
     <!-- 右边栏 -->
     <div class="page-sidebar" id="sidebar">
@@ -26,8 +26,19 @@ import SidebarUserlist from "../../components/sidebar/sidebar-userlist";
 export default {
   name: "index",
   components: { SidebarUserlist, SidebarTags, SidebarBox, ArticleList },
+  data() {
+    return {
+      articleDate: "",
+    };
+  },
   mounted() {},
   methods: {},
+  watch: {
+    $route(to, from) {
+      let routename = to.params.classify;
+      this.articleDate = routename;
+    },
+  },
 };
 </script>
 

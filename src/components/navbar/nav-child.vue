@@ -36,7 +36,6 @@ export default {
   },
   mounted() {
     this.getActiveClassify();
-    console.log(this.$store);
   },
   methods: {
     gotoArticle(route) {
