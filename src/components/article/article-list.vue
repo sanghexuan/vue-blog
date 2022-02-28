@@ -5,9 +5,14 @@
       v-for="(item, index) in data"
       :key="index"
       @click="articleDetails(index)"
-      v-show="item.type == articleDate"
     >
-      <div class="article-list-item-content">
+      <div
+        v-if="
+          articleDate == 'recommend' &&
+          ['java', 'web', 'other'].includes(item.type)
+        "
+        class="article-list-item-content"
+      >
         <ul class="article-info">
           <li class="article-info-row info-meta">
             <ul class="info-meta-list">
@@ -33,19 +38,10 @@
           </li>
         </ul>
       </div>
-    </li>
-
-    <li
-      class="article-list-item"
-      v-for="(item, index) in data"
-      :key="index"
-      @click="articleDetails(index)"
-      v-show="
-        articleDate == 'recommend' ||
-        ['java', 'web', 'other'].includes(item.type)
-      "
-    >
-      <div class="article-list-item-content">
+      <div
+        v-else-if="item.type == articleDate"
+        class="article-list-item-content"
+      >
         <ul class="article-info">
           <li class="article-info-row info-meta">
             <ul class="info-meta-list">
@@ -100,7 +96,7 @@ export default {
     },
   },
   methods: {
-    // 文章详情
+    // 文章页面内详情
     articleDetails(id) {
       this.$router.push({
         path: "/server/articleDetails/" + id,
@@ -114,8 +110,10 @@ export default {
     // 收藏
     starArticle() {},
   },
+
   mounted() {
     this.data = JSON.parse(localStorage.getItem("books")).reverse();
+    console.log(this.data);
   },
 };
 </script>

@@ -10,9 +10,10 @@
       </div>
       <div>
         <select @change="onchange($event)">
-          <option value="web">前端开发</option>
+          <option value="web" >前端开发</option>
           <option value="java">java后段</option>
-          <option value="other">others其他</option>
+          <option value="other" >others其他</option>
+          <option value="" selected="selected">请选择文章类别</option>
          
          </select>
       </div>
@@ -58,17 +59,16 @@ export default {
       this.$router.push({
         name: "index",
       });
+     
     },
     back() {
       window.history.back();
     },
    
   },
-  mounted() {
-   
-  },
- watch: {
   
+ watch: {
+ 
  }
 };
 </script>
