@@ -9,11 +9,19 @@
       <div><h1 class="name">账号登录</h1></div>
       <div class="dropdown-box">
         <h4>账号：</h4>
-        <input type="text" />
+        <el-input
+          placeholder="请输入账号"
+          v-model="accountSettings.name"
+          clearable
+        ></el-input>
       </div>
       <div class="dropdown-box">
         <h4>密码：</h4>
-        <input type="password" />
+        <el-input
+          placeholder="请输入密码"
+          v-model="accountSettings.password"
+          show-password
+        ></el-input>
       </div>
       <div class="btnoutside">
         <button @click="login" class="btn">登陆</button>
@@ -25,6 +33,14 @@
 <script>
 export default {
   name: "user-login",
+  data() {
+    return {
+      accountSettings: {
+        name: "",
+        password: "",
+      },
+    };
+  },
   methods: {
     login() {
       this.$store.commit("changeshowModal");
@@ -33,10 +49,10 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 .name {
   font-size: 1rem;
-  margin: 35px 0 12px 1rem;
+  margin: 35px 0 12px 10px;
 }
 .dropdown-box {
   padding: 0 10px;
@@ -45,16 +61,11 @@ export default {
   justify-content: center;
   align-items: center;
   margin-bottom: 16px;
+  h4 {
+    width: 50px;
+  }
 }
-.dropdown-box input {
-  width: 80%;
-  height: 36px;
-  font-size: 15px;
-  font-weight: 500;
-}
-.dropdown-box.focus {
-  border-color: #007fff;
-}
+
 .btnoutside {
   padding: 0 20px;
 }
