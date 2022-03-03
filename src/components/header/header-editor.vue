@@ -9,12 +9,11 @@
         <input placeholder="请输入文章标题...." maxlength="80"  @change="change($event)"></input>    
       </div>
       <div>
-        <select @change="onchange($event)">
+        <select class="option" @change="onchange($event)">
           <option value="web" >前端开发</option>
           <option value="java">java后段</option>
           <option value="other" >others其他</option>
           <option value="" selected="selected">请选择文章类别</option>
-         
          </select>
       </div>
       <div class="header-editor-header-tools">
@@ -176,6 +175,12 @@ export default {
     .addActicle2 {
       margin-left: 10px;
     }
+  }
+  .option {
+    border: 1px;
+    position: absolute;
+    top: 18px;
+    right: 200px;
   }
 }
 </style>
