@@ -11,9 +11,7 @@
       <li @click="routechange">
         <a><i></i><span>我的主页</span></a>
       </li>
-      <li>
-        <a><i></i><span>设置</span></a>
-      </li>
+
       <li>
         <a><i></i><span>退出</span></a>
       </li>
@@ -72,7 +70,7 @@ export default {
   }
 
   .dropdown-menua {
-    margin-top: 12px;
+    margin-top: 10px;
     text-align: left;
     display: none;
     background-color: #fff;

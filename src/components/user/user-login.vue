@@ -6,6 +6,7 @@
       @click="changedata"
     ></div>
     <div class="pop" v-if="this.$store.state.showModal">
+      <span @click="close">x</span>
       <div><h1 class="name">账号登录</h1></div>
       <div class="dropdown-box">
         <h4>账号：</h4>
@@ -24,7 +25,7 @@
         ></el-input>
       </div>
       <div class="btnoutside">
-        <button @click="login" class="btn">登陆</button>
+        <el-button :plain="true" type="primary" @click="open">登陆</el-button>
       </div>
     </div>
   </div>
@@ -42,7 +43,11 @@ export default {
     };
   },
   methods: {
-    login() {
+    open() {
+      this.$store.commit("changeshowModal");
+      this.$message("登陆成功！");
+    },
+    close() {
       this.$store.commit("changeshowModal");
     },
   },
@@ -67,7 +72,8 @@ export default {
 }
 
 .btnoutside {
-  padding: 0 20px;
+  margin-top: 25px;
+  text-align: center;
 }
 .btn {
   width: 100%;
@@ -97,6 +103,12 @@ export default {
   width: 300px;
   height: 250px;
   z-index: 2;
+  span {
+    position: absolute;
+    font-size: 22px;
+    top: -3px;
+    right: 6px;
+  }
 }
 @media (max-width: 720px) {
   .pop {
