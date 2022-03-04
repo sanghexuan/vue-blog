@@ -3,43 +3,11 @@
     <div class="comment-title">文章点评</div>
 
     <!-- 评论模块 -->
-    <ul class="comment-list">
-      <li class="comment-list-item" v-for="item in 5" :key="item">
-        <img class="user-img" src="../../assets/img/logo/min-logo.png" />
+    <ul class="comment-list" v-for="item in items" :key="item.index">
+      <li class="comment-list-item">
         <div class="user-comment">
-          <div class="user-comment-meg">
-            <h4 class="user-name">用户名称{{ item }}<b>Lv3</b></h4>
-          </div>
-          <!-- -- -->
-
-          <!-- -- -->
-          <div class="user-comment-conntent">
-            评论的内容
-            <!-- <a v-if="item % 2 != 0" href="javascript:void(0)">
-              <icon-fa class="icon-link" icon="link"></icon-fa>
-            </a> -->
-          </div>
-          <div class="user-comment-reply">
-            <time>2020-02-02</time>
-            <div class="action-box">
-              <span> <icon-fa icon="trash"></icon-fa>删除 </span>
-              <span> <icon-fa icon="thumbs-up"></icon-fa>点赞 </span>
-              <span @click="showModal = true">
-                <icon-fa icon="comments"></icon-fa>评论
-              </span>
-            </div>
-          </div>
-          <div>
-            <textarea class="pop" v-if="showModal"></textarea>
-            <div v-if="showModal">
-              <button @click="" class="btn" style="margin-right: 5px">
-                发布
-              </button>
-              <button @click="showModal = false" class="btn">取消</button>
-            </div>
-          </div>
-          <ul class="user-comment-sub" v-if="item % 2 == 0">
-            <li class="user-comment-sub-item" v-for="child in 2" :key="child">
+          <ul class="user-comment-sub">
+            <li class="user-comment-sub-item">
               <img class="user-img" src="../../assets/img/logo/min-logo.png" />
               <div class="user-comment">
                 <div class="user-comment-meg">
@@ -47,31 +15,58 @@
                     用户名称{{ item }}{{ child }}<b>Lv3</b>
                   </h4>
                 </div>
-                <div class="user-comment-conntent">
-                  <span class="reply">回复</span>
-                  <h4 class="user-name reply-user">
-                    用户名称{{ item }}{{ child }}<b>Lv3</b>
-                  </h4>
-                  ： 评论的内容
+                <!-- 一级评论区 -->
+                <div class="user-firstcomment">{{ item.context }}</div>
+                <div class="action-box">
+                  <span> <icon-fa icon="trash"></icon-fa>删除 </span>
+                  <span> <icon-fa icon="thumbs-up"></icon-fa>点赞 </span>
+                  <span @click="showModal = true">
+                    <icon-fa icon="comments" @click="showModal = true"></icon-fa
+                    >评论
+                  </span>
                 </div>
-                <div class="user-comment-reply">
-                  <time>2020-02-02</time>
-                  <div class="action-box">
-                    <span> <icon-fa icon="trash"></icon-fa>删除 </span>
-                    <span> <icon-fa icon="thumbs-up"></icon-fa>点赞 </span>
-                    <span @click="showModal = true">
-                      <icon-fa
-                        icon="comments"
-                        @click="showModal = true"
-                      ></icon-fa
-                      >评论
-                    </span>
+                <!-- 二级回复区 -->
+                <div class="user-secondconntent">
+                  <!-- 判断是否回复二级用户 -->
+                  <div>
+                    <span class="reply">回复</span>
+                    <h4 class="user-name reply-user">用户名称:{{ item }}</h4>
+                  </div>
+
+                  <div class="user-comment-reply">
+                    <span>评论的内容</span>
+                    <time>2020-02-02</time>
+                    <div class="action-box">
+                      <span> <icon-fa icon="trash"></icon-fa>删除 </span>
+                      <span> <icon-fa icon="thumbs-up"></icon-fa>点赞 </span>
+                      <span @click="showModal = true">
+                        <icon-fa
+                          icon="comments"
+                          @click="showModal = true"
+                        ></icon-fa
+                        >评论
+                      </span>
+                    </div>
                   </div>
                 </div>
+                <!-- 回复模块 -->
                 <div>
-                  <textarea class="pop" v-if="showModal"></textarea>
-                  <div v-if="showModal">
-                    <button class="btn" style="margin-right: 5px">发布</button>
+                  <el-input
+                    type="textarea"
+                    :rows="2"
+                    placeholder="请输入内容"
+                    v-model="textarea"
+                    v-if="showModal"
+                  >
+                  </el-input>
+                  <div v-if="showModal" :showModal="showModal">
+                    <button
+                      @click="addcontext"
+                      class="btn"
+                      style="margin-right: 5px"
+                    >
+                      发布
+                    </button>
                     <button @click="showModal = false" class="btn">取消</button>
                   </div>
                 </div>
@@ -91,19 +86,29 @@ export default {
   name: "article-comment",
   components: { IconFa },
   data() {
-    return { data: [], showModal: false };
+    return { itemcomments: [], showModal: false, textarea: "" };
   },
   methods: {
-    clickcomment() {},
+    addcontext() {
+      const comments = this.itemcomments.push({ context: this.textarea });
+      this.showModal = false;
+
+      localStorage.setItem("comments", JSON.stringify(comments));
+    },
   },
-  mounted() {},
+  mounted() {
+    if (localStorage.getItem("comments") === null) {
+      localStorage.setItem("comments", "[]");
+    }
+    const items = JSON.parse(localStorage.getItem("comments"));
+  },
 };
 </script>
 
 <style lang="less" scoped>
 .comment {
   padding: 24px 0 0;
-  margin: 0 24px 36px;
+
   position: relative;
   border-top: 2px dashed #eee;
 
@@ -118,6 +123,9 @@ export default {
     border-radius: 4px;
     border: 1px solid #f8f8f8;
     padding: 4px 12px;
+  }
+  .user-secondconntent {
+    background-color: skyblue;
   }
 
   &-title {
@@ -177,6 +185,7 @@ export default {
       }
 
       .user-comment {
+        width: 100%;
         margin-left: 10px;
         flex: 1;
         min-width: 0;

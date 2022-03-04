@@ -65,7 +65,7 @@
         </el-form>
       </el-tab-pane>
       <el-tab-pane label="简历管理" name="third">
-        <h1 style="font-size: 20px">简历管理</h1>
+        <h1 style="font-size: 20px; color: #606266">简历管理</h1>
         <!-- 简历上传 -->
         <el-upload
           class="upload-demo"
