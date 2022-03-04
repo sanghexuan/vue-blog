@@ -1,5 +1,5 @@
 <template>
-  <div class="article-typetag">article-typetag</div>
+  <div class="article-typetag">111111</div>
 </template>
 
 <script>
