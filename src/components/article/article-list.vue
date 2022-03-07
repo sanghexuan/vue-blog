@@ -113,7 +113,6 @@ export default {
 
   mounted() {
     this.data = JSON.parse(localStorage.getItem("books")).reverse();
-    console.log(this.data);
   },
 };
 </script>

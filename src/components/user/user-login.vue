@@ -1,26 +1,19 @@
 <template>
   <div class="user-login">
-    <div
-      class="mask"
-      v-if="this.$store.state.showModal"
-      @click="changedata"
-    ></div>
+    <div class="mask" v-if="this.$store.state.showModal"></div>
     <div class="pop" v-if="this.$store.state.showModal">
       <span @click="close">x</span>
       <div><h1 class="name">账号登录</h1></div>
       <div class="dropdown-box">
         <h4>账号：</h4>
-        <el-input
-          placeholder="请输入账号"
-          v-model="accountSettings.name"
-          clearable
-        ></el-input>
+        <el-input placeholder="请输入账号" v-model="name" clearable></el-input>
       </div>
       <div class="dropdown-box">
         <h4>密码：</h4>
         <el-input
           placeholder="请输入密码"
-          v-model="accountSettings.password"
+          v-model="password"
+          @input="change($event)"
           show-password
         ></el-input>
       </div>
@@ -36,10 +29,8 @@ export default {
   name: "user-login",
   data() {
     return {
-      accountSettings: {
-        name: "",
-        password: "",
-      },
+      name: "",
+      password: "",
     };
   },
   methods: {
@@ -50,6 +41,9 @@ export default {
     close() {
       this.$store.commit("changeshowModal");
     },
+    // change(e) {
+    //   this.$forceUpdate(e);
+    // },
   },
 };
 </script>

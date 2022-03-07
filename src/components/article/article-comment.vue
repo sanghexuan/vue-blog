@@ -1,9 +1,18 @@
 <template>
   <div class="article-comment comment">
     <div class="comment-title">文章点评</div>
-
+    <div style="text-align: right">
+      <el-input
+        type="textarea"
+        :autosize="{ minRows: 2, maxRows: 4 }"
+        placeholder="输入内容回复"
+        v-model="textarea2"
+      >
+      </el-input>
+      <el-button type="primary" @click="addfirstcontext">发表评论</el-button>
+    </div>
     <!-- 评论模块 -->
-    <ul class="comment-list" v-for="item in items" :key="item.index">
+    <ul class="comment-list" v-for="(item, index) in items" :key="index">
       <li class="comment-list-item">
         <div class="user-comment">
           <ul class="user-comment-sub">
@@ -11,18 +20,17 @@
               <img class="user-img" src="../../assets/img/logo/min-logo.png" />
               <div class="user-comment">
                 <div class="user-comment-meg">
-                  <h4 class="user-name user-nameov">
-                    用户名称{{ item }}{{ child }}<b>Lv3</b>
-                  </h4>
+                  <h4 class="user-name user-nameov">用户名称<b>Lv3</b></h4>
                 </div>
                 <!-- 一级评论区 -->
-                <div class="user-firstcomment">{{ item.context }}</div>
-                <div class="action-box">
+                <div class="user-firstcomment">
+                  {{ item.topcomment }}
+                </div>
+                <div class="action-box" :key="index">
                   <span> <icon-fa icon="trash"></icon-fa>删除 </span>
                   <span> <icon-fa icon="thumbs-up"></icon-fa>点赞 </span>
-                  <span @click="showModal = true">
-                    <icon-fa icon="comments" @click="showModal = true"></icon-fa
-                    >评论
+                  <span @click="item.showInput = true">
+                    <icon-fa icon="comments"></icon-fa>评论
                   </span>
                 </div>
                 <!-- 二级回复区 -->
@@ -30,11 +38,14 @@
                   <!-- 判断是否回复二级用户 -->
                   <div>
                     <span class="reply">回复</span>
-                    <h4 class="user-name reply-user">用户名称:{{ item }}</h4>
+                    <h4 class="user-name reply-user">用户名称:</h4>
                   </div>
-
-                  <div class="user-comment-reply">
-                    <span>评论的内容</span>
+                  <div
+                    class="user-comment-reply"
+                    v-for="comment in item.childComments"
+                    :key="comment.index"
+                  >
+                    <span>{{ comment.topcomment }}</span>
                     <time>2020-02-02</time>
                     <div class="action-box">
                       <span> <icon-fa icon="trash"></icon-fa>删除 </span>
@@ -50,24 +61,25 @@
                   </div>
                 </div>
                 <!-- 回复模块 -->
-                <div>
+                <div v-if="item.showInput == true">
                   <el-input
                     type="textarea"
                     :rows="2"
                     placeholder="请输入内容"
                     v-model="textarea"
-                    v-if="showModal"
                   >
                   </el-input>
-                  <div v-if="showModal" :showModal="showModal">
+                  <div>
                     <button
-                      @click="addcontext"
+                      @click="addcontext(index)"
                       class="btn"
                       style="margin-right: 5px"
                     >
                       发布
                     </button>
-                    <button @click="showModal = false" class="btn">取消</button>
+                    <button @click="item.showInput = false" class="btn">
+                      取消
+                    </button>
                   </div>
                 </div>
               </div>
@@ -85,22 +97,42 @@ import IconFa from "../icon/icon-fa";
 export default {
   name: "article-comment",
   components: { IconFa },
+  inject: ["reload"],
   data() {
-    return { itemcomments: [], showModal: false, textarea: "" };
+    return {
+      items: [],
+      childitem: [],
+      comments: [],
+      itemcomments: [],
+      pathindex: "",
+      showModal: false,
+      commentor: {},
+      textarea: "",
+      textarea2: "",
+    };
   },
   methods: {
-    addcontext() {
-      const comments = this.itemcomments.push({ context: this.textarea });
-      this.showModal = false;
-
-      localStorage.setItem("comments", JSON.stringify(comments));
+    addfirstcontext() {
+      this.commentor["topcomment"] = this.textarea2;
+      this.commentor["showInput"] = false;
+      this.items = JSON.parse(localStorage.getItem("comments") || "[]");
+      this.items.push(this.commentor);
+      localStorage.setItem("comments", JSON.stringify(this.items));
+      this.reload();
+    },
+    addcontext(index) {
+      this.items[index]["childComments"] =
+        this.items[index]["childComments"] || [];
+      this.items[index]["childComments"].push({
+        topcomment: this.textarea,
+        showInput: false,
+      });
+      localStorage.setItem("comments", JSON.stringify(this.items));
+      this.reload();
     },
   },
   mounted() {
-    if (localStorage.getItem("comments") === null) {
-      localStorage.setItem("comments", "[]");
-    }
-    const items = JSON.parse(localStorage.getItem("comments"));
+    this.items = [...JSON.parse(localStorage.getItem("comments"))];
   },
 };
 </script>
@@ -147,7 +179,7 @@ export default {
       overflow: hidden;
       text-overflow: ellipsis;
       margin-bottom: 3px;
-
+      font-size: 12px regular;
       &.user-nameov {
         overflow: inherit;
       }

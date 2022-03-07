@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-view />
+    <router-view v-if="isRouterAlive" />
   </div>
 </template>
 
@@ -10,15 +10,27 @@ import {} from "view-design";
 export default {
   name: "app",
   components: {},
+  provide() {
+    return {
+      reload: this.reload,
+    };
+  },
   data() {
     return {
       indexModal: false,
+      isRouterAlive: true,
     };
   },
   mounted() {
     this.checkIsShowOnece();
   },
   methods: {
+    reload() {
+      this.isRouterAlive = false;
+      this.$nextTick(function () {
+        this.isRouterAlive = true;
+      });
+    },
     checkIsShowOnece() {
       let indexModal = sessionStorage.getItem("indexModal");
       if (!indexModal && indexModal != "yes") {

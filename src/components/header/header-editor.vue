@@ -55,9 +55,9 @@ export default {
     const obj = JSON.parse(localData)
     obj.push(this.data)
     localStorage.setItem('books',JSON.stringify(obj))
-      this.$router.push({
-        name: "index",
-      });
+    this.$router.push({
+      name: "index",
+    });
      
     },
     back() {
