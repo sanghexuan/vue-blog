@@ -23,9 +23,9 @@
                   <h4 class="user-name user-nameov">用户名称<b>Lv3</b></h4>
                 </div>
                 <!-- 一级评论区 -->
-                <div class="user-firstcomment">
+                <span class="user-firstcomment">
                   {{ item.topcomment }}
-                </div>
+                </span>
                 <div class="action-box" :key="index">
                   <span> <icon-fa icon="trash"></icon-fa>删除 </span>
                   <span> <icon-fa icon="thumbs-up"></icon-fa>点赞 </span>
@@ -42,21 +42,53 @@
                   </div>
                   <div
                     class="user-comment-reply"
-                    v-for="comment in item.childComments"
-                    :key="comment.index"
+                    v-for="(comment, index1) in item.childComments"
+                    :key="index1"
                   >
-                    <span>{{ comment.topcomment }}</span>
+                    <span class="user-secondconntent">
+                      {{ comment.topcomment }}</span
+                    >
                     <time>2020-02-02</time>
                     <div class="action-box">
-                      <span> <icon-fa icon="trash"></icon-fa>删除 </span>
-                      <span> <icon-fa icon="thumbs-up"></icon-fa>点赞 </span>
-                      <span @click="showModal = true">
-                        <icon-fa
-                          icon="comments"
-                          @click="showModal = true"
-                        ></icon-fa
-                        >评论
+                      <span> <icon-fa icon="trash"></icon-fa>删除</span>
+                      <span> <icon-fa icon="thumbs-up"></icon-fa>点赞</span>
+                      <span @click="comment.showInput = true">
+                        <icon-fa icon="comments"></icon-fa>评论
                       </span>
+                    </div>
+                  </div>
+                  <div
+                    v-for="(comment, index1) in item.childComments"
+                    :key="index1"
+                  >
+                    <ul>
+                      <li
+                        v-for="grandcomment in comment.grandsonComments"
+                        :key="grandcomment.index"
+                      >
+                        <div>{{ grandcomment.bodycomment }}</div>
+                      </li>
+                    </ul>
+                    <div v-show="comment.showInput == true">
+                      <el-input
+                        type="textarea"
+                        :rows="2"
+                        placeholder="请输入内容"
+                        v-model="textarea3"
+                      >
+                      </el-input>
+                      <div>
+                        <button
+                          @click="addsecondcontext(index, index1)"
+                          class="btn"
+                          style="margin-right: 5px"
+                        >
+                          发布
+                        </button>
+                        <button @click="closechild(grandcomment)" class="btn">
+                          取消
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -71,15 +103,13 @@
                   </el-input>
                   <div>
                     <button
-                      @click="addcontext(index)"
+                      @click="addcontext(index, item)"
                       class="btn"
                       style="margin-right: 5px"
                     >
                       发布
                     </button>
-                    <button @click="item.showInput = false" class="btn">
-                      取消
-                    </button>
+                    <button @click="close(item)" class="btn">取消</button>
                   </div>
                 </div>
               </div>
@@ -109,6 +139,7 @@ export default {
       commentor: {},
       textarea: "",
       textarea2: "",
+      textarea3: "",
     };
   },
   methods: {
@@ -118,8 +149,10 @@ export default {
       this.items = JSON.parse(localStorage.getItem("comments") || "[]");
       this.items.push(this.commentor);
       localStorage.setItem("comments", JSON.stringify(this.items));
+      this.textarea2 = "";
       this.reload();
     },
+
     addcontext(index) {
       this.items[index]["childComments"] =
         this.items[index]["childComments"] || [];
@@ -128,8 +161,27 @@ export default {
         showInput: false,
       });
       localStorage.setItem("comments", JSON.stringify(this.items));
+      this.textarea = "";
       this.reload();
     },
+    addsecondcontext(index, index1) {
+      this.items[index]["childComments"][index1]["grandsonComments"] =
+        this.items[index]["childComments"][index1]["grandsonComments"] || [];
+      this.items[index]["childComments"][index1]["grandsonComments"].push({
+        bodycomment: this.textarea3,
+      });
+      localStorage.setItem("comments", JSON.stringify(this.items));
+      this.textarea = "";
+      this.reload();
+    },
+
+    close(item) {
+      item.showInput = false;
+      localStorage.setItem("comments", JSON.stringify(this.items));
+    },
+    // closechild(comment) {
+    //   comment.showInput = false
+    // }
   },
   mounted() {
     this.items = [...JSON.parse(localStorage.getItem("comments"))];
@@ -140,7 +192,6 @@ export default {
 <style lang="less" scoped>
 .comment {
   padding: 24px 0 0;
-
   position: relative;
   border-top: 2px dashed #eee;
 
@@ -156,8 +207,14 @@ export default {
     border: 1px solid #f8f8f8;
     padding: 4px 12px;
   }
+  .user-firstcomment {
+    display: block;
+    font-size: 17px;
+    margin: 5px 0;
+  }
   .user-secondconntent {
-    background-color: skyblue;
+    display: block;
+    font-size: 14px;
   }
 
   &-title {
