@@ -14,11 +14,7 @@
         <sidebar-article slot="list"></sidebar-article>
       </sidebar-box>
     </div>
-    <!-- <div class="page-recommend">
-            <sidebar-box title="相关文章推荐" icon="tags" color="red">
-                <article-list slot="list"></article-list>
-            </sidebar-box>
-        </div> -->
+
     <nav-article></nav-article>
   </div>
 </template>

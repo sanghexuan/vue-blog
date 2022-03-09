@@ -29,12 +29,19 @@ export default {
   data() {
     return {
       articleDate: "",
+      books: [],
     };
   },
-  mounted() {},
+  // 挂载的时候初始数据也要获取
+  mounted() {
+    // 这步只是在挂载的时候拿到他的值
+    this.articleDate = this.$route.params.classify;
+  },
   methods: {},
+  // 数据变化的时候监听他的数据变化
   watch: {
     $route(to, from) {
+      // 这步只是在他数据变化的时候拿到他的值
       let routename = to.params.classify;
       this.articleDate = routename;
     },

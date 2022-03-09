@@ -1,6 +1,6 @@
 <template>
   <div class="index">
-    <article-list :messages="messages"></article-list>
+    <article-list></article-list>
     <article-detail></article-detail>
     <user-login></user-login>
   </div>
@@ -15,9 +15,7 @@ export default {
   name: "index",
   components: { ArticleList, ArticleDetail, UserLogin },
   data() {
-    return {
-      messages: "zifuchuan",
-    };
+    return {};
   },
   methods: {},
 };

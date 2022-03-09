@@ -85,7 +85,13 @@ export default {
       math: 10,
     };
   },
-  props: ["messages", "articleDate"],
+  props: {
+    articleDate: {
+      type: String,
+      default: "recommend",
+      required: true,
+    },
+  },
   components: { IconFa },
   computed: {
     math2: function () {
@@ -112,7 +118,8 @@ export default {
   },
 
   mounted() {
-    this.data = JSON.parse(localStorage.getItem("books")).reverse();
+    // this.data = this.books.reverse();
+    this.data = [...JSON.parse(localStorage.getItem("books"))].reverse();
   },
 };
 </script>
