@@ -20,7 +20,8 @@
               <img class="user-img" src="../../assets/img/logo/min-logo.png" />
               <div class="user-comment">
                 <div class="user-comment-meg">
-                  <h4 class="user-name user-nameov">用户名称<b>Lv3</b></h4>
+                  <h4 class="user-name user-nameov">用户名称</h4>
+                  <time>2020-02-02</time>
                 </div>
                 <!-- 一级评论区 -->
                 <span class="user-firstcomment">
@@ -37,14 +38,15 @@
                 <div class="user-secondconntent">
                   <!-- 判断是否回复二级用户 -->
                   <div>
-                    <span class="reply">回复</span>
-                    <h4 class="user-name reply-user">用户名称:</h4>
+                    <!-- <span class="reply">回复</span> -->
+                    <!-- <h4 class="user-name reply-user">用户名称:</h4> -->
                   </div>
                   <div
                     class="user-comment-reply"
                     v-for="(comment, index1) in item.childComments"
                     :key="index1"
                   >
+                    <h4 class="user-name reply-user">用户名称:</h4>
                     <span class="user-secondconntent">
                       {{ comment.topcomment }}</span
                     >
@@ -52,12 +54,12 @@
                     <div class="action-box">
                       <span> <icon-fa icon="trash"></icon-fa>删除</span>
                       <span> <icon-fa icon="thumbs-up"></icon-fa>点赞</span>
-                      <span @click="comment.showInput = true">
+                      <!-- <span @click="showModal = true">
                         <icon-fa icon="comments"></icon-fa>评论
-                      </span>
+                      </span> -->
                     </div>
                   </div>
-                  <div
+                  <!-- <div
                     v-for="(comment, index1) in item.childComments"
                     :key="index1"
                   >
@@ -69,7 +71,7 @@
                         <div>{{ grandcomment.bodycomment }}</div>
                       </li>
                     </ul>
-                    <div v-show="comment.showInput == true">
+                    <div v-model="showModal">
                       <el-input
                         type="textarea"
                         :rows="2"
@@ -85,12 +87,12 @@
                         >
                           发布
                         </button>
-                        <button @click="closechild(grandcomment)" class="btn">
+                        <button @click="showModal = false" class="btn">
                           取消
                         </button>
                       </div>
                     </div>
-                  </div>
+                  </div> -->
                 </div>
                 <!-- 回复模块 -->
                 <div v-if="item.showInput == true">
@@ -164,24 +166,26 @@ export default {
       this.textarea = "";
       this.reload();
     },
-    addsecondcontext(index, index1) {
-      this.items[index]["childComments"][index1]["grandsonComments"] =
-        this.items[index]["childComments"][index1]["grandsonComments"] || [];
-      this.items[index]["childComments"][index1]["grandsonComments"].push({
-        bodycomment: this.textarea3,
-      });
-      localStorage.setItem("comments", JSON.stringify(this.items));
-      this.textarea = "";
-      this.reload();
-    },
+    // addsecondcontext(index, index1) {
+    //   this.items[index]["childComments"][index1]["grandsonComments"] =
+    //     this.items[index]["childComments"][index1]["grandsonComments"] || [];
+    //   this.items[index]["childComments"][index1]["grandsonComments"].push({
+    //     bodycomment: this.textarea3,
+    //   });
+    //   localStorage.setItem("comments", JSON.stringify(this.items));
+    //   this.textarea = "";
+    //   this.reload();
+    // },
 
     close(item) {
       item.showInput = false;
       localStorage.setItem("comments", JSON.stringify(this.items));
     },
-    // closechild(comment) {
-    //   comment.showInput = false
-    // }
+    // closechild(grandcomment) {
+    //   console.log(grandcomment);
+    //   grandcomment.showInput = false;
+    //   localStorage.setItem("comments", JSON.stringify(this.items));
+    // },
   },
   mounted() {
     this.items = [...JSON.parse(localStorage.getItem("comments"))];
@@ -194,7 +198,9 @@ export default {
   padding: 24px 0 0;
   position: relative;
   border-top: 2px dashed #eee;
-
+  .user-comment-meg {
+    justify-content: space-between;
+  }
   .pop {
     background-color: #fff;
     border: 2px dashed #eee;
@@ -254,7 +260,7 @@ export default {
       &.reply-user {
         color: #406599;
         display: initial;
-        padding: 0 10px;
+        padding-right: 8px;
         font-size: 13px;
 
         b {
@@ -339,6 +345,8 @@ export default {
             font-size: 13px;
             color: #8a9aa9;
             cursor: default;
+            line-height: 22px;
+            margin-left: 10px;
           }
 
           .action-box {
@@ -387,7 +395,7 @@ export default {
 
       .user-name {
         &.reply-user {
-          padding: 0 5px;
+          padding-right: 5px;
         }
       }
 
