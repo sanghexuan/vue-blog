@@ -12,7 +12,11 @@
       <el-button type="primary" @click="addfirstcontext">发表评论</el-button>
     </div>
     <!-- 评论模块 -->
-    <ul class="comment-list" v-for="(item, index) in items" :key="index">
+    <ul
+      class="comment-list"
+      v-for="(item, index) in compluteTime(this.items)"
+      :key="index"
+    >
       <li class="comment-list-item">
         <div class="user-comment">
           <ul class="user-comment-sub">
@@ -21,16 +25,16 @@
               <div class="user-comment">
                 <div class="user-comment-meg">
                   <h4 class="user-name user-nameov">用户名称</h4>
-                  <time>2020-02-02</time>
+                  <time>{{ item.time }}</time>
                 </div>
                 <!-- 一级评论区 -->
                 <span class="user-firstcomment">
                   {{ item.topcomment }}
                 </span>
-                <div class="action-box" :key="index">
+                <div class="action-box">
                   <span> <icon-fa icon="trash"></icon-fa>删除 </span>
                   <span> <icon-fa icon="thumbs-up"></icon-fa>点赞 </span>
-                  <span @click="item.showInput = true">
+                  <span @click="adddd(index)">
                     <icon-fa icon="comments"></icon-fa>评论
                   </span>
                 </div>
@@ -43,14 +47,16 @@
                   </div>
                   <div
                     class="user-comment-reply"
-                    v-for="(comment, index1) in item.childComments"
+                    v-for="(comment, index1) in compluteTime(
+                      item.childComments
+                    )"
                     :key="index1"
                   >
                     <h4 class="user-name reply-user">用户名称:</h4>
                     <span class="user-secondconntent">
                       {{ comment.topcomment }}</span
                     >
-                    <time>2020-02-02</time>
+                    <time>{{ comment.time }}</time>
                     <div class="action-box">
                       <span> <icon-fa icon="trash"></icon-fa>删除</span>
                       <span> <icon-fa icon="thumbs-up"></icon-fa>点赞</span>
@@ -111,7 +117,7 @@
                     >
                       发布
                     </button>
-                    <button @click="close(item)" class="btn">取消</button>
+                    <button @click="close(index)" class="btn">取消</button>
                   </div>
                 </div>
               </div>
@@ -125,6 +131,9 @@
 
 <script>
 import IconFa from "../icon/icon-fa";
+import * as dayjs from "dayjs";
+var relativeTime = require("dayjs/plugin/relativeTime");
+dayjs.extend(relativeTime);
 
 export default {
   name: "article-comment",
@@ -148,7 +157,11 @@ export default {
     addfirstcontext() {
       this.commentor["topcomment"] = this.textarea2;
       this.commentor["showInput"] = false;
+      var dayjs = require("dayjs");
+      const createtime = dayjs().format("YYYY-MM-DD HH:mm:ss");
+      this.commentor["time"] = createtime;
       this.items = JSON.parse(localStorage.getItem("comments") || "[]");
+
       this.items.push(this.commentor);
       localStorage.setItem("comments", JSON.stringify(this.items));
       this.textarea2 = "";
@@ -156,15 +169,21 @@ export default {
     },
 
     addcontext(index) {
+      var dayjs = require("dayjs");
+      const createtime1 = dayjs().format("YYYY-MM-DD HH:mm:ss");
       this.items[index]["childComments"] =
         this.items[index]["childComments"] || [];
       this.items[index]["childComments"].push({
         topcomment: this.textarea,
         showInput: false,
+        time: createtime1,
       });
       localStorage.setItem("comments", JSON.stringify(this.items));
       this.textarea = "";
       this.reload();
+    },
+    adddd(index) {
+      this.items[index].showInput = true;
     },
     // addsecondcontext(index, index1) {
     //   this.items[index]["childComments"][index1]["grandsonComments"] =
@@ -177,8 +196,8 @@ export default {
     //   this.reload();
     // },
 
-    close(item) {
-      item.showInput = false;
+    close(index) {
+      this.items[index].showInput = false;
       localStorage.setItem("comments", JSON.stringify(this.items));
     },
     // closechild(grandcomment) {
@@ -186,9 +205,19 @@ export default {
     //   grandcomment.showInput = false;
     //   localStorage.setItem("comments", JSON.stringify(this.items));
     // },
+    compluteTime(el) {
+      const newitems = el
+        ?.map((item) => {
+          const newitem = { ...item };
+          newitem.time = dayjs().to(dayjs(item.time));
+          return newitem;
+        })
+        .reverse();
+      return newitems;
+    },
   },
   mounted() {
-    this.items = [...JSON.parse(localStorage.getItem("comments"))];
+    this.items = JSON.parse(localStorage.getItem("comments"));
   },
 };
 </script>

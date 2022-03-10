@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "dayjs": "^1.10.7",
+    "hbl-comment": "^1.2.3",
     "markdown-it": "^10.0.0",
     "markdown-it-abbr": "^1.0.4",
     "markdown-it-container": "^2.0.0",
