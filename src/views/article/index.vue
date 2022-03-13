@@ -8,7 +8,7 @@
     <!-- 右边栏 -->
     <div class="page-sidebar" id="sidebar">
       <sidebar-box title="文章标签" icon="tags" color="red">
-        <sidebar-tags slot="list"></sidebar-tags>
+        <sidebar-aditor slot="list"></sidebar-aditor>
       </sidebar-box>
       <sidebar-box title="作者榜" icon="tags">
         <sidebar-userlist slot="list"></sidebar-userlist>
@@ -20,12 +20,12 @@
 <script>
 import ArticleList from "../../components/article/article-list";
 import SidebarBox from "../../components/sidebar/sidebar-box";
-import SidebarTags from "../../components/sidebar/sidebar-tags";
+import SidebarAditor from "../../components/sidebar/sidebar-adtor.vue";
 import SidebarUserlist from "../../components/sidebar/sidebar-userlist";
 
 export default {
   name: "index",
-  components: { SidebarUserlist, SidebarTags, SidebarBox, ArticleList },
+  components: { SidebarUserlist, SidebarAditor, SidebarBox, ArticleList },
   data() {
     return {
       articleDate: "",

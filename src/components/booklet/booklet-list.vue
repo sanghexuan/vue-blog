@@ -1,5 +1,6 @@
 <template>
   <ul class="booklet-list">
+    <!-- 书籍的链接下载 点击就可以跳出下载 -->
     <li
       class="booklet-list-item"
       v-for="item in 5"
@@ -10,7 +11,7 @@
         <img :src="item.logo" />
       </div>
       <div class="item-info">
-        <h4 class="booklet-title">{{ item.name }}标题</h4>
+        <h4 class="booklet-title">{{ item.name }}书籍名称</h4>
         <div class="booklet-tags">
           <span v-for="tag in 3" :key="tag">{{ tag }}标签</span>
         </div>

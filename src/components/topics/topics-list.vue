@@ -8,8 +8,10 @@
     >
       <div class="item-box">
         <div class="topics-info">
-          <h2 class="topics-info-title">标题</h2>
+          <h2 class="topics-info-title">用户名</h2>
+
           <p>创建时间：2020-02-02</p>
+          <h4>内容</h4>
           <div class="topics-info-btn">
             <span> <icon-fa icon="share"></icon-fa></span>
             <span class="action-active">
@@ -107,7 +109,7 @@ export default {
         }
 
         p {
-          margin-top: 6px;
+          margin-bottom: 6px;
           color: #333;
         }
 
