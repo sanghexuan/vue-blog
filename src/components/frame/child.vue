@@ -5,15 +5,17 @@
     </main>
     <header-bar></header-bar>
     <user-login></user-login>
+    <user-regist></user-regist>
   </div>
 </template>
 
 <script>
 import HeaderBar from "../header/header-bar";
 import UserLogin from "../user/user-login";
+import UserRegist from "../user/user-regist";
 
 export default {
-  components: { HeaderBar, UserLogin },
+  components: { HeaderBar, UserLogin, UserRegist },
 };
 </script>
 <style lang="less" scoped>

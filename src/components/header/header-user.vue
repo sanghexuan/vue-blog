@@ -5,7 +5,7 @@
     <user-logo></user-logo>
     <!-- 登陆按钮 -->
     <button class="login" @click="login" style="margin-right: 5px">登陆</button>
-    <button class="login" @click="login">注册</button>
+    <button class="login" @click="doregist">注册</button>
   </div>
 </template>
 
@@ -15,11 +15,7 @@ import UserLogo from "../user/user-logo";
 export default {
   name: "header-user",
   components: { UserLogo },
-  data() {
-    return {
-      showModal: false,
-    };
-  },
+  data() {},
   methods: {
     articleEditor() {
       this.$router.push({
@@ -28,6 +24,9 @@ export default {
     },
     login() {
       this.$store.commit("changeshowModal");
+    },
+    doregist() {
+      this.$store.commit("changeRegist");
     },
   },
 };

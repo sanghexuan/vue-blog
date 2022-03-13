@@ -6,6 +6,7 @@
     </main>
     <header-bar></header-bar>
     <user-login></user-login>
+    <user-regist></user-regist>
   </div>
 </template>
 
@@ -13,8 +14,9 @@
 import HeaderIndex from "../header/index";
 import HeaderBar from "../header/header-bar";
 import UserLogin from "../user/user-login";
+import UserRegist from "../user/user-regist";
 export default {
-  components: { HeaderBar, HeaderIndex, UserLogin },
+  components: { HeaderBar, HeaderIndex, UserLogin, UserRegist },
   data() {
     return {};
   },

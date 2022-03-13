@@ -8,6 +8,7 @@
     <header-bar></header-bar>
     <nav-button></nav-button>
     <user-login></user-login>
+    <user-regist></user-regist>
   </div>
 </template>
 
@@ -18,10 +19,18 @@ import NavChild from "../navbar/nav-child";
 import { frameMixins } from "./mixins";
 import navButton from "../navbar/nav-button";
 import UserLogin from "../user/user-login";
+import UserRegist from "../user/user-regist";
 
 export default {
   mixins: [frameMixins],
-  components: { navButton, NavChild, HeaderBar, HeaderIndex, UserLogin },
+  components: {
+    navButton,
+    NavChild,
+    HeaderBar,
+    HeaderIndex,
+    UserLogin,
+    UserRegist,
+  },
   data() {
     return {};
   },

@@ -7,6 +7,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     showModal: false,
+    regist: false,
   },
   mutations: {
     changeshowModal(state) {
@@ -14,6 +15,13 @@ export default new Vuex.Store({
         state.showModal = false;
       } else {
         state.showModal = true;
+      }
+    },
+    changeRegist(state) {
+      if (state.regist) {
+        state.regist = false;
+      } else {
+        state.regist = true;
       }
     },
   },
