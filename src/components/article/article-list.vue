@@ -66,9 +66,6 @@
             </span>
           </li>
         </ul>
-        <!-- <div class="article-img">
-          <img src="../../assets/img/logo/max-logo.png" />
-        </div> -->
       </div>
     </li>
   </ul>

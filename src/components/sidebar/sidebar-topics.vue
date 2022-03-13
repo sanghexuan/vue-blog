@@ -7,16 +7,9 @@
       :key="item"
     >
       <div class="topics-item-info">
-        <h4 class="topics-name">标题</h4>
-        <div class="topics-content">
-          <span> <icon-fa icon="eye"></icon-fa>909 </span>
-          <span class="action-active">
-            <icon-fa icon="thumbs-up"></icon-fa>909
-          </span>
-          <span class="action-active">
-            <icon-fa icon="star"></icon-fa>909
-          </span>
-        </div>
+        <span>Hot</span>
+        <h4 class="topics-name">#话题#</h4>
+        <div class="topics-content">2k+</div>
       </div>
     </li>
   </ul>
@@ -40,8 +33,22 @@ export default {
 
 <style lang="less" scoped>
 .sidebar-topics {
+  .topics-item-info {
+    position: relative;
+    span {
+      color: orangered;
+    }
+  }
   width: 100%;
-
+  .topics-name {
+    display: inline-block;
+    margin-left: 5px;
+  }
+  .topics-content {
+    position: absolute;
+    right: 20px;
+    display: inline-block;
+  }
   .topics-item {
     padding: 12px 0;
     display: flex;

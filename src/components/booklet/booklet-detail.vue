@@ -3,35 +3,15 @@
     <div class="booklet-detail-info">
       <div class="info-card">
         <div class="info-card-img">
-          <img src="../../assets/img/logo/max-logo.png" />
+          <img src="" />
         </div>
         <div class="info-card-content">
           <h4>标题</h4>
           <div class="info-description">描述</div>
-          <div class="info-btns">
-            <span> <icon-fa icon="eye"></icon-fa>909 </span>
-            <span> <icon-fa icon="comments"></icon-fa>909 </span>
-            <span class="action-active" @click.stop="thumbsUp">
-              <icon-fa icon="thumbs-up"></icon-fa>909
-            </span>
-            <span class="action-active" @click.stop="starArticle">
-              <icon-fa icon="star"></icon-fa>909
-            </span>
-          </div>
-        </div>
-      </div>
-      <div class="info-star">
-        <div class="star-name">666 人已关注</div>
-        <div class="star-users">
-          <div class="star-users-item" v-for="ind in 15">
-            <img src="../../assets/img/logo/min-logo.png" />
-          </div>
         </div>
       </div>
     </div>
-    <div class="booklet-detail-list">
-      <article-list></article-list>
-    </div>
+    <div class="booklet-detail-list">这里准备写书评</div>
   </div>
 </template>
 

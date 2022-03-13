@@ -7,14 +7,6 @@
       :key="index"
     >
       <h4>文章标题{{ index }}</h4>
-      <div class="article-info">
-        <span> <icon-fa icon="eye"></icon-fa>909 </span>
-        <span> <icon-fa icon="comments"></icon-fa>909 </span>
-        <span class="action-active">
-          <icon-fa icon="thumbs-up"></icon-fa>909
-        </span>
-        <span class="action-active"> <icon-fa icon="star"></icon-fa>909 </span>
-      </div>
     </li>
   </ul>
 </template>
@@ -41,6 +33,7 @@ export default {
 
   &-item {
     padding: 12px 0;
+    padding-left: 20px;
     align-items: center;
     cursor: pointer;
     border-bottom: 1px dashed #eee;
