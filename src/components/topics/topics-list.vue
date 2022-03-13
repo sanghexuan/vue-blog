@@ -7,31 +7,32 @@
       @click="gotoTopicsDetails(item)"
     >
       <div class="item-box">
-        <img src="" />
         <div class="topics-info">
           <h2 class="topics-info-title">标题</h2>
           <p>创建时间：2020-02-02</p>
           <div class="topics-info-btn">
-            <span> <icon-fa icon="eye"></icon-fa>909 </span>
+            <span> <icon-fa icon="share"></icon-fa></span>
             <span class="action-active">
-              <icon-fa icon="thumbs-up"></icon-fa>909
+              <icon-fa icon="comment"></icon-fa>
             </span>
             <span class="action-active">
-              <icon-fa icon="star"></icon-fa>909
+              <icon-fa icon="thumbs-up"></icon-fa>
             </span>
           </div>
         </div>
       </div>
     </div>
+    <nav-button></nav-button>
   </div>
 </template>
 
 <script>
 import IconFa from "../icon/icon-fa";
+import NavButton from "../navbar/nav-button.vue";
 
 export default {
   name: "topics-list",
-  components: { IconFa },
+  components: { IconFa, NavButton },
   methods: {
     gotoTopicsDetails(topicid) {
       this.$router.push({
@@ -49,7 +50,7 @@ export default {
 
   &-item {
     display: inline-block;
-    width: 33.33333%;
+    width: 100%;
     cursor: pointer;
     padding-left: 7px;
     padding-right: 7px;
@@ -61,7 +62,6 @@ export default {
     &:hover,
     &:before {
       transform: translateY(-3px);
-      box-shadow: 0 7px 15px rgba(0, 0, 0, 0.1);
     }
 
     &:before {
@@ -76,7 +76,6 @@ export default {
       overflow: hidden;
       background-color: #fff;
       transition: all 0.2s linear;
-      box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
     }
 
     .item-box {
@@ -92,7 +91,7 @@ export default {
       }
 
       .topics-info {
-        padding: 20px 12px 15px;
+        padding: 12px 12px 15px;
 
         h2 {
           display: -webkit-box;

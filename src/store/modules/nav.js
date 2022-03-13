@@ -2,7 +2,7 @@ export default {
   state: {
     navData: [
       { name: "首页", path: "article", classify: "recommend", icon: "home" },
-      { name: "沸点", path: "boutique", classify: "ui", icon: "heart" },
+      { name: "课程", path: "boutique", classify: "ui", icon: "heart" },
       { name: "小册", path: "booklet", classify: "", icon: "book" },
       { name: "话题", path: "topics", classify: "", icon: "telegram" },
       { name: "我的", path: "use", classify: "", icon: "user" },

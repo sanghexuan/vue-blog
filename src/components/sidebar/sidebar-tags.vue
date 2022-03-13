@@ -1,6 +1,19 @@
 <template>
   <ul class="sidebar-tags">
-    <li class="tag-item" v-for="index in 9" :key="index">标签{{ index }}</li>
+    <li class="tag-item">JS</li>
+    <li class="tag-item">HTML</li>
+    <li class="tag-item">CSS</li>
+    <li class="tag-item">PC</li>
+    <li class="tag-item">charts</li>
+    <li class="tag-item">Node</li>
+    <li class="tag-item">Vue</li>
+    <li class="tag-item">React</li>
+    <li class="tag-item">Angula</li>
+    <li class="tag-item">SVG</li>
+    <li class="tag-item">小程序</li>
+    <li class="tag-item">UI组件库</li>
+    <li class="tag-item">图标库</li>
+    <li class="tag-item">技术站点</li>
   </ul>
 </template>
 
