@@ -13,7 +13,6 @@
         <el-input
           placeholder="请输入密码"
           v-model="password"
-          @input="change($event)"
           show-password
         ></el-input>
       </div>
@@ -41,9 +40,6 @@ export default {
     close() {
       this.$store.commit("changeshowModal");
     },
-    // change(e) {
-    //   this.$forceUpdate(e);
-    // },
   },
 };
 </script>

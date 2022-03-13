@@ -15,7 +15,7 @@ import UserLogo from "../user/user-logo";
 export default {
   name: "header-user",
   components: { UserLogo },
-  data() {},
+
   methods: {
     articleEditor() {
       this.$router.push({

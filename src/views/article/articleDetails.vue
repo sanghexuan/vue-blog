@@ -13,6 +13,7 @@
       <sidebar-box title="作者文章推荐" icon="tags" color="red">
         <sidebar-article slot="list"></sidebar-article>
       </sidebar-box>
+      <nav-button></nav-button>
     </div>
 
     <nav-article></nav-article>
@@ -28,6 +29,7 @@ import SidebarUser from "../../components/sidebar/sidebar-user";
 import SidebarArticle from "../../components/sidebar/sidebar-article";
 import ArticleList from "../../components/article/article-list";
 import NavArticle from "../../components/navbar/nav-article";
+import NavButton from "../../components/navbar/nav-button.vue";
 
 export default {
   name: "articleDetails",
@@ -40,6 +42,7 @@ export default {
     ArticleDetail,
     SidebarTags,
     SidebarBox,
+    NavButton,
   },
   data() {
     return {
