@@ -7,7 +7,7 @@ export const indexRouter = [
   {
     path: "/",
     name: "_index",
-    redirect: "",
+    redirect: "/index",
     meta: {
       title: "首页",
     },

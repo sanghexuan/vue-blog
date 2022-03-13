@@ -4,7 +4,8 @@
     <!-- 用户头像框 -->
     <user-logo></user-logo>
     <!-- 登陆按钮 -->
-    <button class="login" @click="login">登陆</button>
+    <button class="login" @click="login" style="margin-right: 5px">登陆</button>
+    <button class="login" @click="login">注册</button>
   </div>
 </template>
 

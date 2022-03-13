@@ -35,7 +35,13 @@
                   <span @click="deletetopcomment(index)">
                     <icon-fa icon="trash"></icon-fa>删除
                   </span>
-                  <span> <icon-fa icon="thumbs-up"></icon-fa>点赞 </span>
+                  <span
+                    :class="{ active: item.isActive }"
+                    @click="thumbsUp(index)"
+                  >
+                    <icon-fa icon="thumbs-up"></icon-fa
+                    >{{ item.isActive ? "取消点赞" : "点赞" }}
+                  </span>
                   <span @click="adddd(index)">
                     <icon-fa icon="comments"></icon-fa>评论
                   </span>
@@ -63,7 +69,13 @@
                       <span @click="deletechildcomment(index, index1)">
                         <icon-fa icon="trash"></icon-fa>删除</span
                       >
-                      <span> <icon-fa icon="thumbs-up"></icon-fa>点赞</span>
+                      <span
+                        :class="{ active: comment.isActive }"
+                        @click="thumbschildUp(index, index1)"
+                      >
+                        <icon-fa icon="thumbs-up"></icon-fa
+                        >{{ comment.isActive ? "取消点赞" : "点赞" }}</span
+                      >
                       <!-- <span @click="showModal = true">
                         <icon-fa icon="comments"></icon-fa>评论
                       </span> -->
@@ -146,10 +158,7 @@ export default {
   data() {
     return {
       items: [],
-      childitem: [],
       comments: [],
-      itemcomments: [],
-      pathindex: "",
       showModal: false,
       commentor: {},
       textarea: "",
@@ -161,6 +170,7 @@ export default {
     addfirstcontext() {
       this.commentor["topcomment"] = this.textarea2;
       this.commentor["showInput"] = false;
+      this.commentor["isActive"] = false;
       var dayjs = require("dayjs");
       const createtime = dayjs().format("YYYY-MM-DD HH:mm:ss");
       this.commentor["time"] = createtime;
@@ -219,6 +229,15 @@ export default {
     //   grandcomment.showInput = false;
     //   localStorage.setItem("comments", JSON.stringify(this.items));
     // },
+    thumbsUp(index) {
+      this.items[index]["isActive"] = !this.items[index]["isActive"];
+      localStorage.setItem("comments", JSON.stringify(this.items));
+    },
+    thumbschildUp(index, index1) {
+      this.items[index]["childComments"][index1]["isActive"] =
+        !this.items[index]["childComments"][index1]["isActive"];
+      localStorage.setItem("comments", JSON.stringify(this.items));
+    },
     compluteTime(el) {
       const newitems = el?.map((item) => {
         const newitem = { ...item };
@@ -236,6 +255,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.active {
+  color: #406599;
+}
 .comment {
   padding: 24px 0 0;
   position: relative;
