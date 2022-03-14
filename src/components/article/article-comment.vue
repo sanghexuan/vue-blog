@@ -70,7 +70,7 @@
                         <icon-fa icon="trash"></icon-fa>删除</span
                       >
                       <span
-                        :class="{ active: comment.isActive }"
+                        :class="{ active1: comment.isActive }"
                         @click="thumbschildUp(index, index1)"
                       >
                         <icon-fa icon="thumbs-up"></icon-fa
@@ -193,7 +193,7 @@ export default {
       });
       localStorage.setItem("comments", JSON.stringify(this.items));
       this.textarea = "";
-      this.reload();
+      this.close(index);
     },
     adddd(index) {
       this.items[index].showInput = true;
@@ -213,16 +213,15 @@ export default {
     close(index) {
       this.items[index].showInput = false;
       localStorage.setItem("comments", JSON.stringify(this.items));
+      this.reload();
     },
     deletetopcomment(index) {
       this.items.splice(index, 1);
       localStorage.setItem("comments", JSON.stringify(this.items));
-      this.reload();
     },
     deletechildcomment(index, index1) {
       this.items[index].childComments.splice(index1, 1);
       localStorage.setItem("comments", JSON.stringify(this.items));
-      this.reload();
     },
     // closechild(grandcomment) {
     //   console.log(grandcomment);
@@ -237,6 +236,7 @@ export default {
       this.items[index]["childComments"][index1]["isActive"] =
         !this.items[index]["childComments"][index1]["isActive"];
       localStorage.setItem("comments", JSON.stringify(this.items));
+      this.reload();
     },
     compluteTime(el) {
       const newitems = el?.map((item) => {
@@ -256,6 +256,9 @@ export default {
 
 <style lang="less" scoped>
 .active {
+  color: #406599;
+}
+.active1 {
   color: #406599;
 }
 .comment {
