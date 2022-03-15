@@ -24,18 +24,39 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "user-login",
   data() {
     return {
       name: "",
       password: "",
+      token: "",
     };
   },
   methods: {
     open() {
+      axios({
+        method: "post",
+        url: "https://blog-maomao.herokuapp.com/api/users/login",
+        headers: { "content-type": "application/json" },
+        data: {
+          user: {
+            email: this.name,
+            password: this.password,
+          },
+        },
+      })
+        .then((res) => {
+          this.$message("登陆成功！");
+          this.token = res.user.token;
+          localStorage.setItem("token", this.token);
+        })
+        .catch((err) => {
+          this.$message("登陆失败，请校验账号和密码！");
+        });
+
       this.$store.commit("changeshowModal");
-      this.$message("登陆成功！");
     },
     close() {
       this.$store.commit("changeshowModal");
@@ -89,8 +110,8 @@ export default {
   background-color: #fff;
   position: fixed;
   top: 36%;
-  left: 42%;
-  width: 300px;
+  left: 40%;
+  width: 330px;
   height: 250px;
   z-index: 2;
   span {
@@ -103,6 +124,11 @@ export default {
 @media (max-width: 720px) {
   .pop {
     left: 25%;
+  }
+}
+@media (max-width: 390px) {
+  .pop {
+    left: 10%;
   }
 }
 </style>

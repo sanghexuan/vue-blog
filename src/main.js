@@ -30,6 +30,7 @@ Vue.use(FormItem);
 Vue.use(Input);
 Vue.use(Image);
 Vue.use(Upload);
+
 Vue.prototype.$message = Message;
 new Vue({
   store,

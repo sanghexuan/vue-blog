@@ -9,6 +9,8 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "axios": "^0.26.1",
+    "cube-ui": "^1.12.47",
     "dayjs": "^1.10.7",
     "hbl-comment": "^1.2.3",
     "markdown-it": "^10.0.0",
