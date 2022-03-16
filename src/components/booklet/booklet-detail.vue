@@ -3,25 +3,47 @@
     <div class="booklet-detail-info">
       <div class="info-card">
         <div class="info-card-img">
-          <img src="" />
+          <img :src="booklistitem.logo" />
         </div>
         <div class="info-card-content">
-          <h4>标题</h4>
-          <div class="info-description">描述</div>
+          <h4>{{ booklistitem.name }}</h4>
+          <div class="info-description">{{ booklistitem.describe }}}</div>
         </div>
+        <a @click="gotoRead(booklistitem.href)">在线阅读</a>
       </div>
+      <h2 class="reply">书评</h2>
+      <li
+        class="booklet-detail-list"
+        v-for="(item, index) in booklistitem.reply"
+        :key="index"
+      >
+        <div>{{ item.name }}</div>
+        <p>{{ item.comment }}</p>
+      </li>
     </div>
-    <div class="booklet-detail-list">这里准备写书评</div>
   </div>
 </template>
 
 <script>
 import IconFa from "../icon/icon-fa";
 import ArticleList from "../article/article-list";
-
+import booklistapi from "../../dictionary/booklist";
 export default {
   name: "booklet-detail",
   components: { ArticleList, IconFa },
+  data() {
+    return {
+      booklistitem: {},
+    };
+  },
+  methods: {
+    gotoRead(herf) {
+      window.open(herf);
+    },
+  },
+  mounted() {
+    this.booklistitem = booklistapi()[this.$route.params.bookid];
+  },
 };
 </script>
 
@@ -29,7 +51,9 @@ export default {
 .booklet-detail {
   width: 100%;
   background: #f4f5f5;
-
+  .reply {
+    margin: 10px 0 20px 0;
+  }
   &-info {
     width: 100%;
     margin-left: auto;
@@ -38,6 +62,9 @@ export default {
     position: relative;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.15);
     background-color: #fff;
+    li {
+      margin-left: 5px;
+    }
 
     .info-card {
       padding: 20px;
