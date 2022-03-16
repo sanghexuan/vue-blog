@@ -3,21 +3,20 @@
     <!-- 书籍的链接下载 点击就可以跳出下载 -->
     <li
       class="booklet-list-item"
-      v-for="item in 5"
-      @click="gotobookletHome(item)"
+      v-for="(item, index) in booklist"
+      @click="gotobookletHome(index)"
       :key="item.name"
     >
       <div class="item-logo">
         <img :src="item.logo" />
       </div>
       <div class="item-info">
-        <h4 class="booklet-title">{{ item.name }}书籍名称</h4>
+        <h4 class="booklet-title">{{ item.name }}</h4>
         <div class="booklet-tags">
-          <span v-for="tag in 3" :key="tag">{{ tag }}标签</span>
+          <span v-for="tag in item.technology" :key="tag">{{ tag }}</span>
         </div>
         <div class="booklet-describe">
           {{ item.describe }}
-          细节描述
         </div>
       </div>
     </li>
@@ -34,11 +33,17 @@ export default {
         return [];
       },
     },
+    booklist: {
+      type: Array,
+      default: () => {
+        return [];
+      },
+    },
   },
   methods: {
     gotobookletHome(bookid) {
       this.$router.push({
-        path: "/booklet/bookDetail/bookid" + bookid,
+        path: "/booklet/bookDetail/" + bookid,
       });
     },
   },
