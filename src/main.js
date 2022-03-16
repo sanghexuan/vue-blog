@@ -13,6 +13,7 @@ import {
   Image,
   Upload,
   Message,
+  Option,
 } from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
 import "view-design/dist/styles/iview.css";
@@ -30,7 +31,7 @@ Vue.use(FormItem);
 Vue.use(Input);
 Vue.use(Image);
 Vue.use(Upload);
-
+Vue.use(Option);
 Vue.prototype.$message = Message;
 new Vue({
   store,

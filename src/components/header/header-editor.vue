@@ -5,16 +5,19 @@
         class="header-editor-header-logo"
         src="../../assets/img/logo/min-logo.png"
       />
-      <div class="header-editor-header-input">
-        <input placeholder="请输入文章标题...." maxlength="80"  @change="change($event)"></input>    
-      </div>
+
+      <el-input placeholder="请输入文章标题...." v-model="hook"></el-input>
+
       <div>
-        <select class="option" @change="onchange($event)">
-          <option value="web" >前端开发</option>
-          <option value="java">java后段</option>
-          <option value="other" >others其他</option>
-          <option value="" selected="selected">请选择文章类别</option>
-         </select>
+        <el-select class="option" v-model="value" placeholder="请选择文章类别">
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          >
+          </el-option>
+        </el-select>
       </div>
       <div class="header-editor-header-tools">
         <button class="addActicle1" @click="add">发布</button>
@@ -25,6 +28,7 @@
 </template>
 
 <script>
+import { CellGroup } from "view-design";
 export default {
   name: "header-editor",
   components: {},
@@ -32,43 +36,38 @@ export default {
   data() {
     return {
       hook: "",
-      hook1: "",   
-      data: {}
-    }
+      data: {},
+      options: [
+        { value: "web", label: "前端开发" },
+        { value: "java", label: "java后段" },
+        { value: "other", label: "others其他" },
+      ],
+      value: "",
+    };
   },
   methods: {
-    change(e) {
-      // 标题
-      this.hook = e.target.value;
-    },
-     onchange(e) {
-      this.hook1 = e.target.value
-    },
     add() {
-    var dayjs = require('dayjs')
-    const nowtime = dayjs().format("YYYY MM.DD HH:mm:ss");
-     this.data["title"] = this.handbook
-     this.data["body"] = this.hook
-     this.data["type"] = this.hook1
-     this.data["time"] = nowtime
-    const localData = localStorage.getItem('books') === null ? "[]" : localStorage.getItem('books')
-    const obj = JSON.parse(localData)
-    obj.push(this.data)
-    localStorage.setItem('books',JSON.stringify(obj))
-    this.$router.push({
-      name: "index",
-    });
-     
+      var dayjs = require("dayjs");
+      const nowtime = dayjs().format("YYYY MM.DD HH:mm:ss");
+      this.data["title"] = this.handbook;
+      this.data["body"] = this.hook;
+      this.data["type"] = this.value;
+      this.data["time"] = nowtime;
+      const localData =
+        localStorage.getItem("books") === null
+          ? "[]"
+          : localStorage.getItem("books");
+      const obj = JSON.parse(localData);
+      obj.push(this.data);
+      localStorage.setItem("books", JSON.stringify(obj));
+      this.$router.push({
+        name: "index",
+      });
     },
     back() {
       window.history.back();
     },
-   
   },
-  
- watch: {
- 
- }
 };
 </script>
 
@@ -89,23 +88,6 @@ export default {
       height: 60px;
       padding: 10px;
       align-items: center;
-    }
-
-    &-input {
-      flex: 1;
-      min-width: 0;
-
-      input {
-        width: 100%;
-        height: 60px;
-        margin: 0;
-        padding: 0;
-        font-size: 20px;
-        font-weight: 700;
-        color: #000;
-        border: none;
-        outline: none;
-      }
     }
 
     &-tools {
@@ -171,7 +153,8 @@ export default {
     }
   }
   .header-editor-header-tools {
-    padding-left: 190px;
+    width: auto;
+    padding-left: 219px;
     .addActicle2 {
       margin-left: 10px;
     }
@@ -179,8 +162,36 @@ export default {
   .option {
     border: 1px;
     position: absolute;
-    top: 18px;
-    right: 200px;
+    top: 10px;
+    right: 173px;
+  }
+  .el-input {
+    width: 60%;
+    margin-right: 30px;
+    margin-top: 10px;
+  }
+  @media (max-width: 390px) {
+    .option {
+      z-index: 1;
+      width: 146px;
+      right: -57px;
+    }
+    .header-editor-header-logo {
+      display: none;
+    }
+    .header-editor-header-tools {
+      padding-left: 0;
+      // margin-right: 40px;
+    }
+    .el-input {
+      width: 60%;
+    }
+    .addActicle1 {
+      padding: 0 10px;
+    }
+    .addActicle2 {
+      padding: 0 10px;
+    }
   }
 }
 </style>
