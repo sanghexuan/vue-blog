@@ -69,7 +69,12 @@ export default {
     .info-card {
       padding: 20px;
       display: flex;
-
+      a {
+        text-decoration: none;
+      }
+      a:hover {
+        color: skyblue;
+      }
       &-img {
         width: 130px;
         height: 182px;
