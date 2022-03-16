@@ -1,8 +1,7 @@
 <template>
   <div class="header-user">
-    <button class="addArticle" @click="articleEditor">写文章</button>
     <!-- 用户头像框 -->
-    <user-logo></user-logo>
+    <user-logo :login="login" :doregist="doregist"></user-logo>
     <!-- 登陆按钮 -->
     <button class="login" @click="login" style="margin-right: 5px">登陆</button>
     <button class="login" @click="doregist">注册</button>
@@ -17,11 +16,6 @@ export default {
   components: { UserLogo },
 
   methods: {
-    articleEditor() {
-      this.$router.push({
-        name: "articleEditor",
-      });
-    },
     login() {
       this.$store.commit("changeshowModal");
     },
@@ -41,21 +35,6 @@ export default {
   justify-content: center;
   align-items: center;
 
-  .addArticle {
-    color: #fff;
-    border: 1px solid #007fff;
-    background-color: #1e80ff;
-    border-radius: 3px;
-    height: 35px;
-    line-height: 35px;
-    font-size: 15px;
-    font-weight: 500;
-    color: #fff;
-    padding: 0 8px;
-    cursor: pointer;
-    outline: none;
-    margin-right: 20px;
-  }
   .login {
     border: 1px solid #007fff;
     background-color: #fff;
@@ -72,8 +51,12 @@ export default {
 }
 
 @media (max-width: 720px) {
-  .header-user {
+  .login {
     display: none;
+  }
+  .header-user {
+    margin-right: 0;
+    margin-left: 30px;
   }
 }
 </style>

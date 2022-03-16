@@ -11,7 +11,12 @@
       <li @click="routechange">
         <a><i></i><span>我的主页</span></a>
       </li>
-
+      <li class="moblie" @click="login">
+        <a><i></i><span>登陆</span></a>
+      </li>
+      <li class="moblie" @click="doregist">
+        <a><i></i><span>注册</span></a>
+      </li>
       <li>
         <a><i></i><span>退出</span></a>
       </li>
@@ -22,6 +27,7 @@
 <script>
 export default {
   name: "user-logo",
+  props: { login: Function, doregist: Function },
   data() {
     return {
       active: "",
@@ -78,6 +84,16 @@ export default {
     li {
       list-style: none;
       padding: 0 10px;
+    }
+  }
+
+  .moblie {
+    display: none;
+  }
+
+  @media (max-width: 720px) {
+    .moblie {
+      display: block;
     }
   }
 }

@@ -1,8 +1,14 @@
 <template>
   <div class="header-search">
-    <el-input placeholder="请输入内容" v-model="input4">
-      <i slot="prefix" class="el-input__icon el-icon-search"></i>
+    <el-input
+      placeholder="请输入内容"
+      v-model="input4"
+      size="small"
+      prefix-icon="el-input__icon el-icon-search"
+      class="search"
+    >
     </el-input>
+    <button class="addArticle" @click="articleEditor">写文章</button>
   </div>
 </template>
 
@@ -13,6 +19,13 @@ export default {
     return {
       input4: "",
     };
+  },
+  methods: {
+    articleEditor() {
+      this.$router.push({
+        name: "articleEditor",
+      });
+    },
   },
 };
 </script>
@@ -26,16 +39,29 @@ export default {
     top: -5px;
     left: 5px;
   }
+  .search {
+    width: auto;
+    margin-right: 5px;
+  }
+
+  .addArticle {
+    color: #fff;
+    border: 1px solid #007fff;
+    background-color: #1e80ff;
+    border-radius: 3px;
+    height: 35px;
+    line-height: 35px;
+    font-size: 15px;
+    font-weight: 500;
+    color: #fff;
+    padding: 0 8px;
+    cursor: pointer;
+    outline: none;
+    margin-right: 20px;
+  }
 }
-// @media (max-width: 900px) {
-//   .header-search {
-//     padding-left: 0;
-//     flex: 1;
-//     min-width: 0;
-//     width: 100%;
-//     input {
-//       width: 85%;
-//     }
-//   }
-// }
+@media (max-width: 900px) {
+  .header-search {
+  }
+}
 </style>
