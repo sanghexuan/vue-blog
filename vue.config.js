@@ -1,3 +1,7 @@
+const path = require("path");
+function resolve(dir) {
+  return path.join(__dirname, dir);
+}
 // 配置跨域
 const proUrlObj = {
   // 测试
@@ -19,6 +23,7 @@ module.exports = {
       loader: "raw-loader",
     });
   },
+
   chainWebpack: (config) => {
     if (process.env.NODE_ENV === "production") {
       if (process.env.npm_config_report) {
@@ -29,6 +34,7 @@ module.exports = {
         config.plugins.delete("prefetch");
       }
     }
+    config.resolve.alias.set("@", resolve("src"));
   },
   devServer: {
     port: 1111,

@@ -3,7 +3,7 @@
     <!-- 标题 -->
     <h1 class="article-detail-title">{{ this.data.body }}</h1>
     <div class="article-detail-info">
-      <img class="article-userImg" src="../../assets/img/logo/min-logo.png" />
+      <img class="article-userImg" :src="img" />
       <div class="article-info">
         <h4 class="article-info-name">用户名称<b>Lv3</b></h4>
         <div class="article-info-meg">
@@ -21,19 +21,36 @@
 </template>
 
 <script>
-import MarkdownPreview from "../markdown/markdown-preview";
-import mdFile from "../../../README.md";
-
+// const img1 = require("../../assets/img/images/img5.png");
+import img1 from "../../../dist/onLine-build/img/img1.png";
 export default {
   name: "article-detail",
-  components: { MarkdownPreview },
+  components: {},
   props: ["data"],
   data() {
     return {
       mdData: mdFile,
+      random: "",
+      img: img1 || "",
     };
   },
-  mounted() {},
+  methods: {
+    // img() {
+    //   const path = require("path");
+    //   this.random = `../../img/images/img${Number.parseInt(
+    //     Math.random() * 10
+    //   ).toString()}.png`;
+    //   this.random = path.resolve(this.random);
+    //   console.log(this.random);
+    // },
+  },
+
+  mounted() {
+    // this.random = `img/img${Number.parseInt(
+    //   Math.random() * 0
+    // ).toString()}.png`;
+    console.log(this.img);
+  },
 };
 </script>
 

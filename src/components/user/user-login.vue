@@ -17,7 +17,9 @@
         ></el-input>
       </div>
       <div class="btnoutside">
-        <el-button :plain="true" type="primary" @click="open">登陆</el-button>
+        <el-button :loading="loading" :plain="true" type="primary" @click="open"
+          >登陆</el-button
+        >
       </div>
     </div>
   </div>
@@ -32,10 +34,12 @@ export default {
       name: "",
       password: "",
       token: "",
+      loading: false,
     };
   },
   methods: {
     open() {
+      this.loading = true;
       axios({
         method: "post",
         url: "https://blog-maomao.herokuapp.com/api/users/login",
@@ -49,6 +53,8 @@ export default {
       })
         .then((res) => {
           this.$message("登陆成功！");
+          this.loading = false;
+          this.$store.commit("changeshowModal");
           this.token = res.data.user.token;
           localStorage.setItem("token", this.token);
         })
@@ -56,11 +62,10 @@ export default {
           this.$message("登陆失败，请校验账号和密码！");
           console.log(err.response.data);
         });
-
-      this.$store.commit("changeshowModal");
     },
     close() {
       this.$store.commit("changeshowModal");
+      this.loading = false;
     },
   },
 };

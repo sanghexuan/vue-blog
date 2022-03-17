@@ -16,6 +16,9 @@ export default {
       // });
     },
   },
+  mounted() {
+    this.math = Math.random()
+  },
 };
 </script>
 

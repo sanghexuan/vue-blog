@@ -40,7 +40,11 @@
           ></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="submitForm(ruleForm)" class="button"
+          <el-button
+            :loading="loading"
+            type="primary"
+            @click="submitForm(ruleForm)"
+            class="button"
             >确定</el-button
           >
           <el-button @click="resetForm(ruleForm)" class="button"
@@ -77,6 +81,7 @@ export default {
       }
     };
     return {
+      loading: false,
       changePwdDialog: false, //修改密码弹框
       ruleForm: {
         name: "",
@@ -115,10 +120,9 @@ export default {
     close() {
       this.$store.commit("changeRegist");
     },
-    // change(e) {
-    //   this.$forceUpdate(e);
-    // },
+
     submitForm(ruleForm) {
+      this.loading = true;
       axios({
         method: "post",
         url: "https://blog-maomao.herokuapp.com/api/users",
@@ -132,6 +136,7 @@ export default {
       })
         .then(() => {
           this.$message("注册成功！");
+          this.loading = false;
         })
         .catch((err) => {
           this.$message(err);

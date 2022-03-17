@@ -17,7 +17,7 @@
       <li class="moblie" @click="doregist">
         <a><i></i><span>注册</span></a>
       </li>
-      <li>
+      <li @click="clearToken">
         <a><i></i><span>退出</span></a>
       </li>
     </ul>
@@ -44,6 +44,14 @@ export default {
       this.$router.push({
         name: "use",
       });
+    },
+    clearToken() {
+      if (!localStorage.getItem("token")) {
+        this.$message("已经登出 请不要重复操作！");
+      } else {
+        localStorage.removeItem("token");
+        this.$message("登出成功！");
+      }
     },
   },
 };

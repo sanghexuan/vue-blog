@@ -28,9 +28,7 @@ export default {
       });
     },
 
-    searchEnter() {
-      console.log("enter");
-    },
+    searchEnter() {},
   },
 };
 </script>
