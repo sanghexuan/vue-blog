@@ -4,8 +4,9 @@
       placeholder="请输入内容"
       v-model="input4"
       size="small"
-      prefix-icon="el-input__icon el-icon-search"
+      prefix-icon="el-icon-search"
       class="search"
+      @keyup.enter.native="searchEnter"
     >
     </el-input>
     <button class="addArticle" @click="articleEditor">写文章</button>
@@ -25,6 +26,10 @@ export default {
       this.$router.push({
         name: "articleEditor",
       });
+    },
+
+    searchEnter() {
+      console.log("enter");
     },
   },
 };

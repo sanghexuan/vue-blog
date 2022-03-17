@@ -8,7 +8,7 @@
 
       <el-input placeholder="请输入文章标题...." v-model="hook"></el-input>
 
-      <div>
+      <div class="selection">
         <el-select class="option" v-model="value" placeholder="请选择文章类别">
           <el-option
             v-for="item in options"
@@ -93,7 +93,6 @@ export default {
     &-tools {
       width: 380px;
       line-height: 60px;
-
       .todoSave {
         display: inline-block;
         font-size: 16px;
@@ -112,18 +111,16 @@ export default {
           border-radius: 2px;
         }
       }
-
       .articleImg {
         color: #ddd;
         font-size: 25px;
         padding: 1px 15px;
         vertical-align: middle;
       }
-
       .addActicle1 {
         height: 32px;
         line-height: 32px;
-        padding: 0 20px;
+        padding: 0 8px;
         font-size: 15px;
         font-weight: 600;
         white-space: nowrap;
@@ -138,7 +135,7 @@ export default {
       .addActicle2 {
         height: 32px;
         line-height: 32px;
-        padding: 0 20px;
+        padding: 0 8px;
         font-size: 15px;
         font-weight: 600;
         white-space: nowrap;
@@ -154,7 +151,6 @@ export default {
   }
   .header-editor-header-tools {
     width: auto;
-    padding-left: 219px;
     .addActicle2 {
       margin-left: 10px;
     }
@@ -163,25 +159,19 @@ export default {
     border: 1px;
     position: absolute;
     top: 10px;
-    right: 173px;
+    right: 70px !important;
   }
   .el-input {
-    width: 60%;
+    width: 48%;
     margin-right: 30px;
     margin-top: 10px;
   }
   @media (max-width: 390px) {
-    .option {
-      z-index: 1;
-      width: 146px;
-      right: -57px;
-    }
     .header-editor-header-logo {
       display: none;
     }
     .header-editor-header-tools {
       padding-left: 0;
-      // margin-right: 40px;
     }
     .el-input {
       width: 60%;

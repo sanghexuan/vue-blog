@@ -41,7 +41,7 @@ export default {
 .article-detail {
   margin-bottom: 36px;
   padding: 15px 24px 0;
-  height: 1100px;
+  min-height: 900px;
   &-info {
     display: flex;
     align-items: center;

@@ -49,11 +49,12 @@ export default {
       })
         .then((res) => {
           this.$message("登陆成功！");
-          this.token = res.user.token;
+          this.token = res.data.user.token;
           localStorage.setItem("token", this.token);
         })
         .catch((err) => {
           this.$message("登陆失败，请校验账号和密码！");
+          console.log(err.response.data);
         });
 
       this.$store.commit("changeshowModal");
