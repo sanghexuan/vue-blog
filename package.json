@@ -2,6 +2,8 @@
   "name": "blog.maxiaoqu.com",
   "projectName": "码小趣-博客",
   "version": "1.0.0",
+  "postinstall": "npm run build",
+  "start": "node server.js",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
