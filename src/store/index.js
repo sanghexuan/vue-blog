@@ -8,8 +8,13 @@ export default new Vuex.Store({
   state: {
     showModal: false,
     regist: false,
+    token: "",
   },
   mutations: {
+    changeToken(state, token) {
+      state.token = token;
+      localStorage.setItem("token", token);
+    },
     changeshowModal(state) {
       if (state.showModal) {
         state.showModal = false;

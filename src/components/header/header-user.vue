@@ -1,7 +1,12 @@
 <template>
   <div class="header-user">
     <!-- 用户头像框 -->
-    <user-logo :login="login" :doregist="doregist"></user-logo>
+    <user-logo
+      :login="login"
+      :doregist="doregist"
+      :token="token"
+      :setToken="setToken"
+    ></user-logo>
     <!-- 登陆按钮 -->
     <button class="login" @click="login" style="margin-right: 5px">登陆</button>
     <button class="login" @click="doregist">注册</button>
@@ -14,8 +19,16 @@ import UserLogo from "../user/user-logo";
 export default {
   name: "header-user",
   components: { UserLogo },
+  data() {
+    return {
+      token: "",
+    };
+  },
 
   methods: {
+    setToken(token) {
+      this.token = token;
+    },
     login() {
       this.$store.commit("changeshowModal");
     },

@@ -57,10 +57,13 @@ export default {
           this.$store.commit("changeshowModal");
           this.token = res.data.user.token;
           localStorage.setItem("token", this.token);
+          this.$store.commit("changeToken", this.token);
+          // this.reload();
         })
         .catch((err) => {
           this.$message("登陆失败，请校验账号和密码！");
-          console.log(err.response.data);
+          this.loading = false;
+          // console.log(err.response.data);
         });
     },
     close() {

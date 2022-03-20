@@ -14,6 +14,9 @@ import {
   Upload,
   Message,
   Option,
+  Dropdown,
+  DropdownMenu,
+  DropdownItem,
 } from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
 import "view-design/dist/styles/iview.css";
@@ -32,6 +35,10 @@ Vue.use(Input);
 Vue.use(Image);
 Vue.use(Upload);
 Vue.use(Option);
+Vue.use(Dropdown);
+Vue.use(DropdownMenu);
+Vue.use(DropdownItem);
+
 Vue.prototype.$message = Message;
 new Vue({
   store,

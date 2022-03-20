@@ -1,26 +1,25 @@
 <template>
-  <div class="header-logo" @mouseover="mouseOver" @mouseleave="mouseLeave">
-    <div data-hover="dropdown">
-      <a class="user-logo avatar">
-        <img
-          src="https://upload.jianshu.io/users/upload_avatars/27254820/14951973-dbd6-4551-a30f-51119e9db3c9?imageMogr2/auto-orient/strip|imageView2/1/w/120/h/120"
-        />
-      </a>
-    </div>
-    <ul class="dropdown-menua" :style="active">
-      <li @click="routechange">
-        <a><i></i><span>我的主页</span></a>
-      </li>
-      <li class="moblie" @click="login">
-        <a><i></i><span>登陆</span></a>
-      </li>
-      <li class="moblie" @click="doregist">
-        <a><i></i><span>注册</span></a>
-      </li>
-      <li @click="clearToken">
-        <a><i></i><span>退出</span></a>
-      </li>
-    </ul>
+  <div class="header-logo">
+    <el-dropdown size="mini" @command="handleCommand">
+      <div data-hover="dropdown">
+        <a class="user-logo avatar">
+          <img
+            v-if="token"
+            src="https://upload.jianshu.io/users/upload_avatars/27254820/14951973-dbd6-4551-a30f-51119e9db3c9?imageMogr2/auto-orient/strip|imageView2/1/w/120/h/120"
+          />
+        </a>
+      </div>
+      <el-dropdown-menu slot="dropdown" class="dropdown-menua">
+        <el-dropdown-item command="a">我的主页</el-dropdown-item>
+        <li class="moblie">
+          <el-dropdown-item command="b">登陆</el-dropdown-item>
+        </li>
+        <li class="moblie">
+          <el-dropdown-item command="c">注册</el-dropdown-item>
+        </li>
+        <el-dropdown-item command="d">退出</el-dropdown-item>
+      </el-dropdown-menu>
+    </el-dropdown>
   </div>
 </template>
 
@@ -30,15 +29,31 @@ export default {
   props: { login: Function, doregist: Function },
   data() {
     return {
-      active: "",
+      token: "",
     };
   },
-  methods: {
-    mouseOver() {
-      this.active = "display: block";
+
+  watch: {
+    "$store.state.token"(newVal) {
+      this.token = newVal;
     },
-    mouseLeave() {
-      this.active = "";
+  },
+  methods: {
+    handleCommand(command) {
+      switch (command) {
+        case "a":
+          this.routechange();
+          break;
+        case "b":
+          this.login();
+          break;
+        case "c":
+          this.doregist();
+          break;
+        case "d":
+          this.clearToken();
+          break;
+      }
     },
     routechange() {
       this.$router.push({
@@ -46,13 +61,19 @@ export default {
       });
     },
     clearToken() {
-      if (!localStorage.getItem("token")) {
+      if (!this.token) {
         this.$message("已经登出 请不要重复操作！");
       } else {
         localStorage.removeItem("token");
         this.$message("登出成功！");
+        this.token = "";
+        this.$store.commit("changeToken", this.token);
+        // this.reload();
       }
     },
+  },
+  mounted() {
+    this.token = localStorage.getItem("token");
   },
 };
 </script>
@@ -94,15 +115,14 @@ export default {
       padding: 0 10px;
     }
   }
+}
+.moblie {
+  display: none;
+}
 
+@media (max-width: 720px) {
   .moblie {
-    display: none;
-  }
-
-  @media (max-width: 720px) {
-    .moblie {
-      display: block;
-    }
+    display: block;
   }
 }
 </style>

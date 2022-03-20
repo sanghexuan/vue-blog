@@ -59,7 +59,11 @@
               show-password
             ></el-input>
           </el-form-item>
-          <el-button :plain="true" type="primary" @click="personOpen"
+          <el-button
+            :loading="loading"
+            :plain="true"
+            type="primary"
+            @click="personOpen"
             >保存提交</el-button
           >
         </el-form>
@@ -101,6 +105,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "my-self",
   data() {
@@ -108,6 +113,7 @@ export default {
       activeName: "first",
       tabPosition: "left",
       labelPosition: "left",
+      loading: false,
       // 简历展示图片
       src: "https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg",
       // 简历上传文件
@@ -139,14 +145,14 @@ export default {
   methods: {
     // tabs栏
     handleClick(tab, event) {
-      console.log(tab, event);
+      // console.log(tab, event);
     },
     // 简历文件
     handleRemove(file, fileList) {
-      console.log(file, fileList);
+      // console.log(file, fileList);
     },
     handlePreview(file) {
-      console.log(file);
+      // console.log(file);
     },
     handleExceed(files, fileList) {
       this.$message.warning(
@@ -162,9 +168,31 @@ export default {
     open() {
       this.$message("保存提交成功！");
     },
-    // 账号设置弹出框消息提示
+    // 账号设置 修改账户密码
     personOpen() {
-      this.$message("账号密码设置成功！");
+      this.loading = true;
+      axios({
+        method: "post",
+        url: "https://blog-maomao.herokuapp.com/api/users/change",
+        headers: { "content-type": "application/json" },
+        data: {
+          user: {
+            email: this.accountSettings.name,
+            password: this.accountSettings.password,
+            token: localStorage.getItem("token"),
+          },
+        },
+      })
+        .then((res) => {
+          localStorage.setItem("token", res.data.user.token);
+          this.$store.commit("changeToken", res.data.user.token);
+          this.loading = false;
+          this.$message("账号密码设置成功！");
+        })
+        .catch((err) => {
+          this.$message("error！", err.response.data);
+          this.loading = false;
+        });
     },
   },
 };
