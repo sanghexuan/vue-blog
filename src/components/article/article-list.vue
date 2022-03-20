@@ -73,7 +73,7 @@
 
 <script>
 import IconFa from "../icon/icon-fa";
-
+import axios from "axios";
 export default {
   name: "article-list",
   data() {
@@ -102,7 +102,7 @@ export default {
     // 文章页面内详情
     articleDetails(id) {
       this.$router.push({
-        path: "/server/articleDetails/" + id,
+        path: `/server/articleDetails/${id}`,
       });
     },
 
@@ -117,6 +117,32 @@ export default {
   mounted() {
     // this.data = this.books.reverse();
     this.data = [...JSON.parse(localStorage.getItem("books"))].reverse();
+
+    axios({
+      method: "get",
+      url: "https://blog-maomao.herokuapp.com/api/articles/:slug",
+      // headers: {
+      //   "content-type": "application/json",
+      //   authorization: this.$store.state.token,
+      // },
+      // data: {
+      //   article: {
+      //     title: this.data["title"],
+      //     time: this.data["time"],
+      //     body: this.data["body"],
+      //     tagList: this.data["type"],
+      //   },
+      // },
+    })
+      .then((res) => {
+        // localStorage.setItem("token", res.data.user.token);
+        // this.$store.commit("changeToken", res.data.user.token);
+        //  接口完成删除
+        this.data = res.data.article;
+      })
+      .catch((err) => {
+        this.$message("error！");
+      });
   },
 };
 </script>

@@ -10,9 +10,13 @@
           <time>{{ this.data.time }}</time>
           <span class="views-count">阅读 9090</span>
         </div>
+        <el-button class="editBtn" type="text" @click="edit(data)"
+          >编辑</el-button
+        >
       </div>
     </div>
     <h4>{{ this.data.title }}</h4>
+
     <!-- <div class="article-detail-content"> -->
 
     <!-- <markdown-preview></markdown-preview> -->
@@ -35,6 +39,11 @@ export default {
     };
   },
   methods: {
+    edit(data) {
+      this.$router.push({
+        path: `/editor/articleEditor?id=${this.$route.params.id}`,
+      });
+    },
     // img() {
     //   const path = require("path");
     //   this.random = `../../img/images/img${Number.parseInt(
@@ -49,7 +58,7 @@ export default {
     // this.random = `img/img${Number.parseInt(
     //   Math.random() * 0
     // ).toString()}.png`;
-    console.log(this.img);
+    console.log();
   },
 };
 </script>
@@ -63,67 +72,72 @@ export default {
     display: flex;
     align-items: center;
     margin-bottom: 24px;
+    position: relative;
+    .editBtn {
+      position: absolute;
+      right: 0;
+      top: 27px;
+    }
+  }
+  .article {
+    &-userImg {
+      flex: 0 0 auto;
+      margin-right: 12px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
 
-    .article {
-      &-userImg {
-        flex: 0 0 auto;
-        margin-right: 12px;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
+    &-info {
+      min-width: 0;
+      flex-grow: 1;
+
+      &-name {
+        display: inline-block;
+        max-width: 100%;
+        font-size: 16px;
+        font-weight: 700;
+        color: #333;
+
+        b {
+          color: #ffffff;
+          font-size: 12px;
+          background: #1e80ff;
+          padding: 1px 5px;
+          margin-left: 10px;
+          vertical-align: middle;
+          border-radius: 2px;
+        }
       }
 
-      &-info {
-        min-width: 0;
-        flex-grow: 1;
+      &-meg {
+        font-size: 13px;
+        color: #909090;
 
-        &-name {
-          display: inline-block;
-          max-width: 100%;
-          font-size: 16px;
-          font-weight: 700;
-          color: #333;
-
-          b {
-            color: #ffffff;
-            font-size: 12px;
-            background: #1e80ff;
-            padding: 1px 5px;
-            margin-left: 10px;
-            vertical-align: middle;
-            border-radius: 2px;
-          }
+        time {
+          letter-spacing: 1px;
         }
 
-        &-meg {
-          font-size: 13px;
-          color: #909090;
-
-          time {
-            letter-spacing: 1px;
-          }
-
-          .views-count {
-            margin-left: 6px;
-          }
+        .views-count {
+          margin-left: 6px;
         }
       }
     }
   }
+}
 
-  &-title {
-    margin: 20px 0;
-    font-size: 24px;
-    font-weight: 700;
-    line-height: 1.5;
-  }
+&-title {
+  margin: 20px 0;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.5;
+}
 
-  &-content {
-    word-break: break-word;
-    line-height: 1.75;
-    font-weight: 400;
-    font-size: 15px;
-    overflow-x: hidden;
-  }
+&-content {
+  word-break: break-word;
+  line-height: 1.75;
+  font-weight: 400;
+  font-size: 15px;
+  overflow-x: hidden;
 }
 </style>

@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { CellGroup } from "view-design";
+import axios from "axios";
 export default {
   name: "header-editor",
   components: {},
@@ -59,13 +59,56 @@ export default {
           : localStorage.getItem("books");
       const obj = JSON.parse(localData);
       obj.push(this.data);
-      localStorage.setItem("books", JSON.stringify(obj));
-      this.$router.push({
-        name: "index",
-      });
+      axios({
+        method: "post",
+        url: "https://blog-maomao.herokuapp.com/api/articles",
+        headers: {
+          "content-type": "application/json",
+          authorization: this.$store.state.token,
+        },
+        data: {
+          article: {
+            title: this.data["title"],
+            time: this.data["time"],
+            body: this.data["body"],
+            tagList: this.data["type"],
+          },
+        },
+      })
+        .then((res) => {
+          localStorage.setItem("token", res.data.user.token);
+          this.$store.commit("changeToken", res.data.user.token);
+          //  接口完成删除
+          localStorage.setItem("books", JSON.stringify(obj));
+          this.$router.push({
+            name: "index",
+          });
+          this.$message("发布成功！");
+        })
+        .catch((err) => {
+          this.$message("error！");
+        });
     },
     back() {
       window.history.back();
+    },
+    mounted() {
+      //  id
+      this.$route.params.id;
+      // 拿到该id的内容主体
+      axios({
+        method: "get",
+        url: "https://blog-maomao.herokuapp.com/api/articles/:slug",
+      })
+        .then((res) => {
+          // 获得数据在窗口展现
+          this.handbook = res.data.article.title;
+          this.hook = res.data.article.body;
+          this.value = res.data.article.type;
+        })
+        .catch((err) => {
+          this.$message("error！");
+        });
     },
   },
 };

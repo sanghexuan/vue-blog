@@ -172,14 +172,16 @@ export default {
     personOpen() {
       this.loading = true;
       axios({
-        method: "post",
-        url: "https://blog-maomao.herokuapp.com/api/users/change",
-        headers: { "content-type": "application/json" },
+        method: "put",
+        url: "https://blog-maomao.herokuapp.com/api/users",
+        headers: {
+          "content-type": "application/json",
+          authorization: this.$store.state.token,
+        },
         data: {
           user: {
             email: this.accountSettings.name,
             password: this.accountSettings.password,
-            token: localStorage.getItem("token"),
           },
         },
       })

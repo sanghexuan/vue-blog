@@ -56,7 +56,6 @@ export default {
           this.loading = false;
           this.$store.commit("changeshowModal");
           this.token = res.data.user.token;
-          localStorage.setItem("token", this.token);
           this.$store.commit("changeToken", this.token);
           // this.reload();
         })
