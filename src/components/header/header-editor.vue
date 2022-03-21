@@ -64,22 +64,20 @@ export default {
         url: "https://blog-maomao.herokuapp.com/api/articles",
         headers: {
           "content-type": "application/json",
-          authorization: this.$store.state.token,
+          authorization: `Bearer${this.$store.state.token}`,
         },
         data: {
           article: {
-            title: this.data["title"],
+            title: this.data["body"],
             time: this.data["time"],
-            body: this.data["body"],
+            body: this.data["title"],
             tagList: this.data["type"],
           },
         },
       })
         .then((res) => {
-          localStorage.setItem("token", res.data.user.token);
-          this.$store.commit("changeToken", res.data.user.token);
           //  接口完成删除
-          localStorage.setItem("books", JSON.stringify(obj));
+          // localStorage.setItem("books", JSON.stringify(obj));
           this.$router.push({
             name: "index",
           });

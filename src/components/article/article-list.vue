@@ -9,7 +9,7 @@
       <div
         v-if="
           articleDate == 'recommend' &&
-          ['java', 'web', 'other'].includes(item.type)
+          ['java', 'web', 'other'].includes(item.tagList[0])
         "
         class="article-list-item-content"
       >
@@ -19,15 +19,15 @@
               <li class="item item-user">发布人名称</li>
               <li class="item item-date">发布时间 {{ item.time }}</li>
               <li class="item item-type">
-                类别 {{ item.type ? item.type : "暂无" }}
+                类别 {{ item.tagList[0] ? item.tagList[0] : "暂无" }}
               </li>
             </ul>
           </li>
           <li class="article-info-row info-title">
-            <h4>{{ item.body }}</h4>
+            <h4>{{ item.title }}</h4>
           </li>
           <li class="info-title">
-            <h2>{{ item.title }}</h2>
+            <h2>{{ item.body }}</h2>
           </li>
           <li class="article-info-row info-action">
             <span> <icon-fa icon="eye"></icon-fa>{{ math2 }}</span>
@@ -39,7 +39,7 @@
         </ul>
       </div>
       <div
-        v-else-if="item.type == articleDate"
+        v-else-if="item.tagList[0] == articleDate"
         class="article-list-item-content"
       >
         <ul class="article-info">
@@ -53,10 +53,10 @@
             </ul>
           </li>
           <li class="article-info-row info-title">
-            <h4>{{ item.body }}</h4>
+            <h4>{{ item.title }}</h4>
           </li>
           <li class="info-title">
-            <h2>{{ item.title }}</h2>
+            <h2>{{ item.body }}</h2>
           </li>
           <li class="article-info-row info-action">
             <span> <icon-fa icon="eye"></icon-fa>{{ math2 }}</span>
@@ -73,6 +73,7 @@
 
 <script>
 import IconFa from "../icon/icon-fa";
+import { Loading } from "element-ui";
 import axios from "axios";
 export default {
   name: "article-list",
@@ -80,6 +81,7 @@ export default {
     return {
       data: [],
       math: 10,
+      loading: true,
     };
   },
   props: {
@@ -115,12 +117,13 @@ export default {
   },
 
   mounted() {
+    // this.loading = true;
     // this.data = this.books.reverse();
-    this.data = [...JSON.parse(localStorage.getItem("books"))].reverse();
-
+    // this.data = [...JSON.parse(localStorage.getItem("books"))].reverse();
+    Loading.service();
     axios({
       method: "get",
-      url: "https://blog-maomao.herokuapp.com/api/articles/:slug",
+      url: "https://blog-maomao.herokuapp.com/api/articles",
       // headers: {
       //   "content-type": "application/json",
       //   authorization: this.$store.state.token,
@@ -138,7 +141,12 @@ export default {
         // localStorage.setItem("token", res.data.user.token);
         // this.$store.commit("changeToken", res.data.user.token);
         //  接口完成删除
-        this.data = res.data.article;
+        let loadingInstance = Loading.service();
+        this.$nextTick(() => {
+          // 以服务的方式调用的 Loading 需要异步关闭
+          loadingInstance.close();
+        });
+        this.data = [...res.data.articles];
       })
       .catch((err) => {
         this.$message("error！");

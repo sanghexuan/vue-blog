@@ -17,6 +17,8 @@ import {
   Dropdown,
   DropdownMenu,
   DropdownItem,
+  Table,
+  TableColumn,
 } from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
 import "view-design/dist/styles/iview.css";
@@ -38,6 +40,8 @@ Vue.use(Option);
 Vue.use(Dropdown);
 Vue.use(DropdownMenu);
 Vue.use(DropdownItem);
+Vue.use(Table);
+Vue.use(TableColumn);
 
 Vue.prototype.$message = Message;
 new Vue({

@@ -99,7 +99,36 @@
           </div>
         </div>
       </el-tab-pane>
-      <el-tab-pane label="我的文章" name="fourth">我的文章</el-tab-pane>
+      <el-tab-pane label="我的文章" name="fourth"
+        >我的文章
+        <template>
+          <el-table :data="tableData" border style="width: 100%">
+            <el-table-column fixed prop="date" label="日期" width="150">
+            </el-table-column>
+            <el-table-column prop="name" label="姓名" width="120">
+            </el-table-column>
+            <el-table-column prop="province" label="省份" width="120">
+            </el-table-column>
+            <el-table-column prop="city" label="市区" width="120">
+            </el-table-column>
+            <el-table-column prop="address" label="地址" width="300">
+            </el-table-column>
+            <el-table-column prop="zip" label="邮编" width="120">
+            </el-table-column>
+            <el-table-column fixed="right" label="操作" width="100">
+              <template slot-scope="scope">
+                <el-button
+                  @click="handleClick(scope.row)"
+                  type="text"
+                  size="small"
+                  >查看</el-button
+                >
+                <el-button type="text" size="small">编辑</el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+        </template>
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -120,10 +149,6 @@ export default {
       fileList: [
         {
           name: "food.jpeg",
-          url: "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100",
-        },
-        {
-          name: "food2.jpeg",
           url: "https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100",
         },
       ],
@@ -176,7 +201,7 @@ export default {
         url: "https://blog-maomao.herokuapp.com/api/users",
         headers: {
           "content-type": "application/json",
-          authorization: this.$store.state.token,
+          authorization: `Bearer${this.$store.state.token}`,
         },
         data: {
           user: {
@@ -186,13 +211,17 @@ export default {
         },
       })
         .then((res) => {
-          localStorage.setItem("token", res.data.user.token);
-          this.$store.commit("changeToken", res.data.user.token);
-          this.loading = false;
+          this.$store.commit("changeToken", "");
+          localStorage.setItem("token", "");
           this.$message("账号密码设置成功！");
+          this.loading = false;
         })
         .catch((err) => {
-          this.$message("error！", err.response.data);
+          if (err.response.data.statusCode == 401) {
+            this.$message("请先登陆的用户！");
+          } else {
+            this.$message(err.response.data.message);
+          }
           this.loading = false;
         });
     },

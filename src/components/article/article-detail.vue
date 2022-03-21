@@ -1,7 +1,7 @@
 <template>
   <article class="article-detail">
     <!-- 标题 -->
-    <h1 class="article-detail-title">{{ this.data.body }}</h1>
+    <h2 class="article-detail-title">{{ this.data.body }}</h2>
     <div class="article-detail-info">
       <img class="article-userImg" :src="img" />
       <div class="article-info">
@@ -68,6 +68,10 @@ export default {
   margin-bottom: 36px;
   padding: 15px 24px 0;
   min-height: 900px;
+  .article-detail-title {
+    font-size: 22px;
+    margin: 5px 0 10px 0;
+  }
   &-info {
     display: flex;
     align-items: center;
