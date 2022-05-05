@@ -13,6 +13,7 @@ import {
   Image,
   Upload,
   Message,
+  MessageBox,
   Option,
   Dropdown,
   DropdownMenu,
@@ -25,7 +26,13 @@ import "view-design/dist/styles/iview.css";
 import "./assets/css/common.css";
 import "./assets/css/fontAwesome.css";
 import "./assets/less/index.less";
+import "github-markdown-css/github-markdown.css";
+import "highlight.js/styles/default.css";
+import Highlight from "vue-markdown-highlight";
+Vue.use(Highlight);
 
+Vue.prototype.$message = Message; //vue实例上挂载Message
+Vue.prototype.$messagebox = MessageBox;
 Vue.config.productionTip = false;
 Vue.use(Button);
 Vue.use(Select);
@@ -43,7 +50,6 @@ Vue.use(DropdownItem);
 Vue.use(Table);
 Vue.use(TableColumn);
 
-Vue.prototype.$message = Message;
 new Vue({
   store,
   router,

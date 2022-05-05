@@ -75,6 +75,7 @@
 import IconFa from "../icon/icon-fa";
 import { Loading } from "element-ui";
 import axios from "axios";
+
 export default {
   name: "article-list",
   data() {
@@ -115,41 +116,32 @@ export default {
     // 收藏
     starArticle() {},
   },
-
+  watch: {
+    "$store.state.airtitle": {
+      handler(newVal) {
+        this.data = newVal;
+      },
+      immediate: true,
+      deep: true,
+    },
+  },
   mounted() {
-    // this.loading = true;
-    // this.data = this.books.reverse();
-    // this.data = [...JSON.parse(localStorage.getItem("books"))].reverse();
     Loading.service();
     axios({
       method: "get",
       url: "https://blog-maomao.herokuapp.com/api/articles",
-      // headers: {
-      //   "content-type": "application/json",
-      //   authorization: this.$store.state.token,
-      // },
-      // data: {
-      //   article: {
-      //     title: this.data["title"],
-      //     time: this.data["time"],
-      //     body: this.data["body"],
-      //     tagList: this.data["type"],
-      //   },
-      // },
     })
       .then((res) => {
-        // localStorage.setItem("token", res.data.user.token);
-        // this.$store.commit("changeToken", res.data.user.token);
         //  接口完成删除
         let loadingInstance = Loading.service();
         this.$nextTick(() => {
-          // 以服务的方式调用的 Loading 需要异步关闭
+          // 以服务的方式调用的 Loading 需要异步关闭`
           loadingInstance.close();
         });
-        this.data = [...res.data.articles];
+        this.data = res.data.articles.reverse();
       })
       .catch((err) => {
-        this.$message("error！");
+        this.$message(err);
       });
   },
 };
@@ -248,7 +240,7 @@ export default {
           h2 {
             color: #86909c;
             font-size: 13px;
-            line-height: 22px;
+            height: 60px;
             overflow: hidden;
             text-overflow: ellipsis;
           }

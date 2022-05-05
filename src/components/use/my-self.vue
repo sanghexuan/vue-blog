@@ -60,7 +60,7 @@
             ></el-input>
           </el-form-item>
           <el-button
-            :loading="loading"
+            :loading="tableloading"
             :plain="true"
             type="primary"
             @click="personOpen"
@@ -102,32 +102,43 @@
       <el-tab-pane label="我的文章" name="fourth"
         >我的文章
         <template>
-          <el-table :data="tableData" border style="width: 100%">
-            <el-table-column fixed prop="date" label="日期" width="150">
+          <el-table
+            v-loading="loading"
+            :data="tableData"
+            border
+            style="width: 100%"
+          >
+            <el-table-column fixed prop="title" label="标题" width="150">
             </el-table-column>
-            <el-table-column prop="name" label="姓名" width="120">
+            <el-table-column prop="tagList" label="标签" width="120">
             </el-table-column>
-            <el-table-column prop="province" label="省份" width="120">
-            </el-table-column>
-            <el-table-column prop="city" label="市区" width="120">
-            </el-table-column>
-            <el-table-column prop="address" label="地址" width="300">
-            </el-table-column>
-            <el-table-column prop="zip" label="邮编" width="120">
-            </el-table-column>
-            <el-table-column fixed="right" label="操作" width="100">
+            <el-table-column fixed="right" label="操作" width="120">
               <template slot-scope="scope">
                 <el-button
-                  @click="handleClick(scope.row)"
+                  @click="handleClickdetils(scope.$index)"
                   type="text"
                   size="small"
                   >查看</el-button
                 >
-                <el-button type="text" size="small">编辑</el-button>
+                <el-button
+                  @click="editDetils(scope.$index)"
+                  type="text"
+                  size="small"
+                  >编辑</el-button
+                >
+                <el-button
+                  @click="deleteAirtcle(scope.$index, scope.row)"
+                  type="text"
+                  size="small"
+                  >删除</el-button
+                >
               </template>
             </el-table-column>
           </el-table>
         </template>
+      </el-tab-pane>
+      <el-tab-pane label="用户管理" name="five">
+        <user-control></user-control>
       </el-tab-pane>
     </el-tabs>
   </div>
@@ -135,13 +146,18 @@
 
 <script>
 import axios from "axios";
+import UserControl from "./user-control.vue";
+
 export default {
   name: "my-self",
+  components: { UserControl },
   data() {
     return {
+      tableData: [],
       activeName: "first",
       tabPosition: "left",
       labelPosition: "left",
+      tableloading: true,
       loading: false,
       // 简历展示图片
       src: "https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg",
@@ -172,6 +188,45 @@ export default {
     handleClick(tab, event) {
       // console.log(tab, event);
     },
+    handleClickdetils(id) {
+      this.$router.push({ path: `/server/articleDetails/${id}` });
+    },
+    editDetils(id) {
+      this.$router.push({
+        path: `/editor/articleEditor?id=${id}`,
+      });
+    },
+    deleteAirtcle(id, row) {
+      let token = localStorage.getItem("token");
+      let ID = row._id;
+      this.$messagebox
+        .confirm(`是否删除 ${row.title} 此条数据, 是否继续?`, "提示", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning",
+        })
+        .then(() => {
+          this.tableData.splice(id, 1);
+          axios({
+            method: "delete",
+            url: `https://blog-maomao.herokuapp.com/api/articles/${ID}`,
+            headers: {
+              "content-type": "application/json",
+              authorization: `Bearer ${token}`,
+            },
+          });
+          this.$message({
+            type: "success",
+            message: "删除成功!",
+          });
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除",
+          });
+        });
+    },
     // 简历文件
     handleRemove(file, fileList) {
       // console.log(file, fileList);
@@ -201,7 +256,7 @@ export default {
         url: "https://blog-maomao.herokuapp.com/api/users",
         headers: {
           "content-type": "application/json",
-          authorization: `Bearer${this.$store.state.token}`,
+          authorization: `Bearer ${this.$store.state.token}`,
         },
         data: {
           user: {
@@ -225,6 +280,23 @@ export default {
           this.loading = false;
         });
     },
+    getAriticle() {
+      this.tableloading = true;
+      axios({
+        method: "get",
+        url: "https://blog-maomao.herokuapp.com/api/articles",
+      })
+        .then((res) => {
+          this.tableloading = false;
+          this.tableData = res.data.articles;
+        })
+        .catch((err) => {
+          this.$message(err);
+        });
+    },
+  },
+  created() {
+    this.getAriticle();
   },
 };
 </script>

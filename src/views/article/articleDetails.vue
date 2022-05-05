@@ -30,6 +30,7 @@ import SidebarArticle from "../../components/sidebar/sidebar-article";
 import ArticleList from "../../components/article/article-list";
 import NavArticle from "../../components/navbar/nav-article";
 import NavButton from "../../components/navbar/nav-button.vue";
+import axios from "axios";
 
 export default {
   name: "articleDetails",
@@ -46,13 +47,24 @@ export default {
   },
   data() {
     return {
-      data: [],
+      data: {},
     };
   },
   mounted() {
     this.data = JSON.parse(localStorage.getItem("books")).reverse()[
       this.$route.params.id
     ];
+    axios({
+      method: "get",
+      url: "https://blog-maomao.herokuapp.com/api/articles",
+    })
+      .then((res) => {
+        let articleWord = res.data.articles.reverse();
+        this.data = articleWord[this.$route.params.id];
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   },
   methods: {},
 };

@@ -1,23 +1,19 @@
 <template>
   <div class="header-logo">
-    <a class="avatar">
-      <img class="header-logo-min" src="../../assets/img/logo/min-logo.png"
-    /></a>
+    <a class="avatar"> <img class="header-logo-min" :src="imgageUrl" /></a>
   </div>
 </template>
 
 <script>
 export default {
   name: "header-logo",
+  props: {},
   methods: {
     gotoIndex() {
       // this.$router.push({
       //   name: "index",
       // });
     },
-  },
-  mounted() {
-    this.math = Math.random()
   },
 };
 </script>

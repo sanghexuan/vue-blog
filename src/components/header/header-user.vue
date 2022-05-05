@@ -36,6 +36,7 @@ export default {
       this.$store.commit("changeRegist");
     },
   },
+  mounted() {},
 };
 </script>
 

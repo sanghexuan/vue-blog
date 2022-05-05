@@ -6,10 +6,27 @@
         src="../../assets/img/logo/min-logo.png"
       />
 
-      <el-input placeholder="请输入文章标题...." v-model="hook"></el-input>
+      <el-input
+        placeholder="请输入文章标题...."
+        v-model="titleData"
+        @input="
+          (value) => {
+            titlechange(value);
+          }
+        "
+      ></el-input>
 
       <div class="selection">
-        <el-select class="option" v-model="value" placeholder="请选择文章类别">
+        <el-select
+          class="option"
+          v-model="typeData"
+          @change="
+            (value) => {
+              typechange(value);
+            }
+          "
+          placeholder="请选择文章类别"
+        >
           <el-option
             v-for="item in options"
             :key="item.value"
@@ -32,11 +49,20 @@ import axios from "axios";
 export default {
   name: "header-editor",
   components: {},
-  props: ["handbook"],
+  props: {
+    handbook: {
+      type: String,
+    },
+    titleData: {
+      // type: Object,
+    },
+    typeData: {},
+  },
   data() {
     return {
+      ppp: "",
       hook: "",
-      data: {},
+      data: [],
       options: [
         { value: "web", label: "前端开发" },
         { value: "java", label: "java后段" },
@@ -46,11 +72,17 @@ export default {
     };
   },
   methods: {
+    titlechange(value) {
+      this.hook = value;
+    },
+    typechange(value) {
+      this.value = value;
+    },
     add() {
       var dayjs = require("dayjs");
       const nowtime = dayjs().format("YYYY MM.DD HH:mm:ss");
-      this.data["title"] = this.handbook;
-      this.data["body"] = this.hook;
+      this.data["title"] = this.hook;
+      this.data["body"] = this.handbook;
       this.data["type"] = this.value;
       this.data["time"] = nowtime;
       const localData =
@@ -64,13 +96,13 @@ export default {
         url: "https://blog-maomao.herokuapp.com/api/articles",
         headers: {
           "content-type": "application/json",
-          authorization: `Bearer${this.$store.state.token}`,
+          authorization: `Bearer ${this.$store.state.token}`,
         },
         data: {
           article: {
-            title: this.data["body"],
+            title: this.data["title"],
+            body: this.data["body"],
             time: this.data["time"],
-            body: this.data["title"],
             tagList: this.data["type"],
           },
         },
@@ -84,30 +116,13 @@ export default {
           this.$message("发布成功！");
         })
         .catch((err) => {
-          this.$message("error！");
+          this.$message(err);
         });
     },
     back() {
       window.history.back();
     },
-    mounted() {
-      //  id
-      this.$route.params.id;
-      // 拿到该id的内容主体
-      axios({
-        method: "get",
-        url: "https://blog-maomao.herokuapp.com/api/articles/:slug",
-      })
-        .then((res) => {
-          // 获得数据在窗口展现
-          this.handbook = res.data.article.title;
-          this.hook = res.data.article.body;
-          this.value = res.data.article.type;
-        })
-        .catch((err) => {
-          this.$message("error！");
-        });
-    },
+    beforeCreate() {},
   },
 };
 </script>

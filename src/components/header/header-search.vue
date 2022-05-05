@@ -14,11 +14,14 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
   name: "header-search",
   data() {
     return {
       input4: "",
+      articles: [],
     };
   },
   methods: {
@@ -27,8 +30,20 @@ export default {
         name: "articleEditor",
       });
     },
-
-    searchEnter() {},
+    searchEnter() {
+      axios({
+        method: "get",
+        url: `https://blog-maomao.herokuapp.com/api/articles?name=${this.input4}
+`,
+        headers: { "content-type": "application/json" },
+      }).then((res) => {
+        this.articles = res.data.articles;
+        this.handleArticle(this.articles);
+      });
+    },
+    handleArticle(data) {
+      this.$store.commit("changeairtitle", data);
+    },
   },
 };
 </script>

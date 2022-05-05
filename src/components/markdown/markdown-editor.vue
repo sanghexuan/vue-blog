@@ -223,6 +223,7 @@ export default {
     mdAutoTextarea,
   },
   props: {
+    bodyData1: {},
     scrollStyle: {
       // 是否渲染滚动条样式(webkit)
       type: Boolean,

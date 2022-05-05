@@ -2,14 +2,14 @@
   <ul class="sidebar-topics">
     <li
       class="topics-item"
-      v-for="item in 5"
+      v-for="item in recommend"
       @click="gotoTopicsDetails(item)"
-      :key="item"
+      :key="item.key"
     >
       <div class="topics-item-info">
         <span>Hot</span>
-        <h4 class="topics-name">#话题#</h4>
-        <div class="topics-content">2k+</div>
+        <h4 class="topics-name">{{ `#${item.title}#` }}</h4>
+        <span class="topics-content">阅读量{{ item.visitCount }}</span>
       </div>
     </li>
   </ul>
@@ -20,7 +20,10 @@ import IconFa from "../icon/icon-fa";
 
 export default {
   name: "sidebar-topics",
-  components: { IconFa },
+  props: { recommend: { type: Array } },
+  data() {
+    return {};
+  },
   methods: {
     gotoTopicsDetails(topicid) {
       this.$router.push({
@@ -45,9 +48,6 @@ export default {
     margin-left: 5px;
   }
   .topics-content {
-    position: absolute;
-    right: 20px;
-    display: inline-block;
   }
   .topics-item {
     padding: 12px 0;

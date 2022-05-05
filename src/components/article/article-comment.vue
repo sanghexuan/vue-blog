@@ -21,7 +21,7 @@
         <div class="user-comment">
           <ul class="user-comment-sub">
             <li class="user-comment-sub-item">
-              <img class="user-img" src="../../assets/img/logo/min-logo.png" />
+              <img class="user-img" :src="item.url" />
               <div class="user-comment">
                 <div class="user-comment-meg">
                   <h4 class="user-name user-nameov">用户名称</h4>
@@ -146,6 +146,8 @@
 </template>
 
 <script>
+import md5 from "blueimp-md5";
+import Identicon from "identicon.js";
 import IconFa from "../icon/icon-fa";
 import * as dayjs from "dayjs";
 var relativeTime = require("dayjs/plugin/relativeTime");
@@ -209,6 +211,21 @@ export default {
     //   this.textarea = "";
     //   this.reload();
     // },
+    getRandomheader() {
+      let hash = md5(Math.random());
+      let data = new Identicon(hash, 420).toString();
+      this.imgageUrl =
+        "https://img-blog.csdnimg.cn/2022010611223663237.png" + data;
+      let options = {
+        foreground: [0, 0, 0, 255], // rgba black
+        background: [255, 255, 255, 255], // rgba white
+        margin: 0.2, // 20% margin
+        size: 100, // 420px square
+        format: "svg", // use SVG instead of PNG
+      };
+      let data1 = new Identicon(hash, options).toString();
+      return (this.imgageUrl = "data:image/svg+xml;base64," + data1);
+    },
 
     close(index) {
       this.items[index].showInput = false;
@@ -242,6 +259,7 @@ export default {
       const newitems = el?.map((item) => {
         const newitem = { ...item };
         newitem.time = dayjs().to(dayjs(item.time));
+        newitem.url = this.getRandomheader();
         return newitem;
       });
 

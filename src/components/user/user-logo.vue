@@ -3,10 +3,7 @@
     <el-dropdown size="mini" @command="handleCommand">
       <div data-hover="dropdown">
         <a class="user-logo avatar">
-          <img
-            v-if="token"
-            src="https://upload.jianshu.io/users/upload_avatars/27254820/14951973-dbd6-4551-a30f-51119e9db3c9?imageMogr2/auto-orient/strip|imageView2/1/w/120/h/120"
-          />
+          <img v-if="token" :src="imgageUrl" />
         </a>
       </div>
       <el-dropdown-menu slot="dropdown" class="dropdown-menua">
@@ -24,9 +21,12 @@
 </template>
 
 <script>
+import md5 from "blueimp-md5";
+import Identicon from "identicon.js";
+
 export default {
   name: "user-logo",
-  props: { login: Function, doregist: Function },
+  props: { login: Function, doregist: Function, src: { type: String } },
   data() {
     return {
       token: "",
@@ -71,9 +71,25 @@ export default {
         // this.reload();
       }
     },
+    getRandomheader() {
+      let hash = md5(Math.random());
+      let data = new Identicon(hash, 420).toString();
+      this.imgageUrl =
+        "https://img-blog.csdnimg.cn/2022010611223663237.png" + data;
+      let options = {
+        foreground: [0, 0, 0, 255], // rgba black
+        background: [255, 255, 255, 255], // rgba white
+        margin: 0.2, // 20% margin
+        size: 100, // 420px square
+        format: "svg", // use SVG instead of PNG
+      };
+      let data1 = new Identicon(hash, options).toString();
+      this.imgageUrl = "data:image/svg+xml;base64," + data1;
+    },
   },
   mounted() {
     this.token = localStorage.getItem("token");
+    this.getRandomheader();
   },
 };
 </script>
@@ -87,7 +103,7 @@ export default {
     position: relative;
     width: 40px;
     height: 40px;
-    margin: 8px 24px 8px 16px;
+    margin: 8px 16px 8px 0;
   }
   .user-logo {
     position: relative;

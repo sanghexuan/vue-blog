@@ -1,7 +1,7 @@
 <template>
   <div class="sidebar-user">
     <div class="user-item">
-      <img src="" />
+      <img :src="imgageUrl" />
       <div class="user-item-info">
         <h4 class="user-name">用户名称<b>Lv3</b></h4>
       </div>
@@ -23,10 +23,32 @@
 
 <script>
 import IconFa from "../icon/icon-fa";
+import md5 from "blueimp-md5";
+import Identicon from "identicon.js";
 
 export default {
   name: "sidebar-user",
   components: { IconFa },
+  methods: {
+    getRandomheader() {
+      let hash = md5(Math.random());
+      let data = new Identicon(hash, 420).toString();
+      this.imgageUrl =
+        "https://img-blog.csdnimg.cn/2022010611223663237.png" + data;
+      let options = {
+        foreground: [0, 0, 0, 255], // rgba black
+        background: [255, 255, 255, 255], // rgba white
+        margin: 0.2, // 20% margin
+        size: 100, // 420px square
+        format: "svg", // use SVG instead of PNG
+      };
+      let data1 = new Identicon(hash, options).toString();
+      this.imgageUrl = "data:image/svg+xml;base64," + data1;
+    },
+  },
+  created() {
+    this.getRandomheader();
+  },
 };
 </script>
 

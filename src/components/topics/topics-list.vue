@@ -2,16 +2,19 @@
   <div class="topics-list">
     <div
       class="topics-list-item"
-      v-for="item in 10"
-      :key="item"
+      v-for="(item, index) in topics"
+      :key="index"
       @click="gotoTopicsDetails(item)"
     >
       <div class="item-box">
         <div class="topics-info">
-          <h2 class="topics-info-title">用户名</h2>
-
-          <p>创建时间：2020-02-02</p>
-          <h4>内容</h4>
+          <div style="display: flex; margin-bottom: 5px; align-items: center">
+            <img class="topics-img" :src="item.url" />
+            <p class="topics-info-title">{{ item.username }}</p>
+            <p>阅读量{{ item.visitCount }}</p>
+          </div>
+          <p>创建时间：{{ item.lastActiveTime }}</p>
+          <h4>{{ item.title }}</h4>
           <div class="topics-info-btn">
             <span> <icon-fa icon="share"></icon-fa></span>
             <span class="action-active">
@@ -35,6 +38,14 @@ import NavButton from "../navbar/nav-button.vue";
 export default {
   name: "topics-list",
   components: { IconFa, NavButton },
+  props: {
+    topics: { type: Array },
+  },
+  data() {
+    return {
+      data: [],
+    };
+  },
   methods: {
     gotoTopicsDetails(topicid) {
       this.$router.push({
@@ -49,7 +60,19 @@ export default {
 .topics-list {
   width: 100%;
   background: #f4f5f5;
-
+  .topics-img {
+    flex: 0 0 auto;
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 50%;
+    display: inline-block !important;
+  }
+  .topics-info-title {
+    padding-left: 5px !important;
+    display: inline-block !important;
+    margin-bottom: 5px;
+    margin-right: 8px;
+  }
   &-item {
     display: inline-block;
     width: 100%;

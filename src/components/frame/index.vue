@@ -20,7 +20,6 @@ import { frameMixins } from "./mixins";
 import navButton from "../navbar/nav-button";
 import UserLogin from "../user/user-login";
 import UserRegist from "../user/user-regist";
-
 export default {
   mixins: [frameMixins],
   components: {

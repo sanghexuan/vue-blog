@@ -9,8 +9,12 @@ export default new Vuex.Store({
     showModal: false,
     regist: false,
     token: "",
+    airtitle: [],
   },
   mutations: {
+    changeairtitle(state, data) {
+      state.airtitle = data;
+    },
     changeToken(state, token) {
       state.token = token;
       localStorage.setItem("token", token);

@@ -1,13 +1,26 @@
 <template>
   <div class="page">
-    <header-editor @click="add" :handbook="handbook"></header-editor>
-    <markdownEditor class="markdownEditor" v-model="handbook"></markdownEditor>
+    <header-editor
+      :titleData="titleData"
+      :typeData="typeData"
+      :handbook="handbook"
+    ></header-editor>
+    <markdownEditor
+      class="markdownEditor"
+      v-model="bodyData"
+      @change="
+        (value) => {
+          bodychange(value);
+        }
+      "
+    ></markdownEditor>
   </div>
 </template>
 
 <script>
 import HeaderEditor from "../../components/header/header-editor";
 import markdownEditor from "../../components/markdown/markdown-editor";
+import axios from "axios";
 
 export default {
   name: "articleEditor",
@@ -15,15 +28,36 @@ export default {
   data() {
     return {
       handbook: "",
+      titleData: "",
+      typeData: "",
+      bodyData: "",
+      num: 0,
     };
   },
   watch: {},
-  mounted() {},
+  mounted() {
+    let string = this.$route.fullPath;
+    this.num = string.split("=")[1];
+    axios({
+      method: "get",
+      url: "https://blog-maomao.herokuapp.com/api/articles",
+    })
+      .then((res) => {
+        let articleWord = res.data.articles.reverse();
+        this.titleData = articleWord[this.num].title;
+        this.typeData = articleWord[this.num].tagList[0];
+        this.bodyData = articleWord[this.num].body;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
   methods: {
-    add() {
-      this.$emit("add", this.handbook);
+    bodychange(value) {
+      this.handbook = value;
     },
   },
+  created() {},
 };
 </script>
 
