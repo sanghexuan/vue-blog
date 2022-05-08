@@ -21,6 +21,7 @@
 import HeaderEditor from "../../components/header/header-editor";
 import markdownEditor from "../../components/markdown/markdown-editor";
 import axios from "axios";
+import { Loading } from "element-ui";
 
 export default {
   name: "articleEditor",
@@ -38,11 +39,16 @@ export default {
   mounted() {
     let string = this.$route.fullPath;
     this.num = string.split("=")[1];
+    Loading.service();
     axios({
       method: "get",
       url: "https://blog-maomao.herokuapp.com/api/articles",
     })
       .then((res) => {
+        let loadingInstance = Loading.service();
+        this.$nextTick(() => {
+          loadingInstance.close();
+        });
         let articleWord = res.data.articles.reverse();
         this.titleData = articleWord[this.num].title;
         this.typeData = articleWord[this.num].tagList[0];

@@ -10,26 +10,26 @@
         <el-form
           :label-position="labelPosition"
           label-width="80px"
-          :model="personalData"
+          :model="personalDataTotal"
         >
           <el-form-item label="用户名">
-            <el-input v-model="personalData.name"></el-input>
+            <el-input v-model="personalDataTotal.name"></el-input>
           </el-form-item>
           <el-form-item label="职位">
-            <el-input v-model="personalData.region"></el-input>
+            <el-input v-model="personalDataTotal.region"></el-input>
           </el-form-item>
           <el-form-item label="公司">
-            <el-input v-model="personalData.type"></el-input>
+            <el-input v-model="personalDataTotal.type"></el-input>
           </el-form-item>
           <el-form-item label="个人主页">
-            <el-input v-model="personalData.web"></el-input>
+            <el-input v-model="personalDataTotal.web"></el-input>
           </el-form-item>
           <el-form-item label="个人介绍">
             <el-input
               type="textarea"
               :rows="4"
               placeholder="请输入内容"
-              v-model="personalData.textarea"
+              v-model="personalDataTotal.textarea"
             ></el-input>
           </el-form-item>
         </el-form>
@@ -105,7 +105,9 @@
           <el-table
             v-loading="loading"
             :data="tableData"
+            stripe
             border
+            height="620"
             style="width: 100%"
           >
             <el-table-column fixed prop="title" label="标题" width="150">
@@ -151,6 +153,7 @@ import UserControl from "./user-control.vue";
 export default {
   name: "my-self",
   components: { UserControl },
+  props: { personalData: { type: Object } },
   data() {
     return {
       tableData: [],
@@ -169,12 +172,12 @@ export default {
         },
       ],
       // 个人资料数据
-      personalData: {
-        name: "",
-        region: "",
-        type: "",
-        web: "",
-        textarea: "",
+      personalDataTotal: {
+        name: this.personalData.name || "",
+        region: this.personalData.region || "",
+        type: this.personalData.type || "",
+        web: this.personalData.web || "",
+        textarea: this.personalData.textarea || "",
       },
       // 账号设置数据
       accountSettings: {
@@ -297,6 +300,7 @@ export default {
   },
   created() {
     this.getAriticle();
+    // this.personalData = JSON.parse(localStorage.getItem("personalData"));
   },
 };
 </script>

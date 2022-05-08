@@ -29,6 +29,9 @@ import "./assets/less/index.less";
 import "github-markdown-css/github-markdown.css";
 import "highlight.js/styles/default.css";
 import Highlight from "vue-markdown-highlight";
+import VueClipboard from "vue-clipboard2";
+Vue.use(VueClipboard);
+
 Vue.use(Highlight);
 
 Vue.prototype.$message = Message; //vue实例上挂载Message

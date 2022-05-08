@@ -17,7 +17,7 @@
     </div>
 
     <div>
-      <div class="markdown-body">
+      <div>
         <VueMarkdown :source="data.body" v-highlight></VueMarkdown>
       </div>
       <div id="interfaceCorrection">
@@ -94,12 +94,14 @@ export default {
   },
 
   created() {
+    // Loading.service();
     this.getRandomheader();
   },
   watch: {
     data: {
       handler(newVal) {
-        if (Object.keys(newVal).length === 0) {
+        // console.log(Object.keys(newVal));
+        if (!Object.keys(newVal).includes("_id", "__v")) {
           Loading.service();
         } else {
           let loadingInstance = Loading.service();

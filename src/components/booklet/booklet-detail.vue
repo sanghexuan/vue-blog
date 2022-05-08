@@ -11,13 +11,26 @@
         </div>
         <a @click="gotoRead(booklistitem.href)">在线阅读</a>
       </div>
+      <!-- 内容简介 -->
+      <h2>内容简介</h2>
+      <p>{{ booklistitem.content }}</p>
+      <!-- 作者简介 -->
+      <h2>作者简介</h2>
+      <p>{{ booklistitem.autor }}</p>
+      <!-- 目录 -->
+      <h2>目录</h2>
+      <ul>
+        <li v-for="item in booklistitem.catalogue" :key="item.key">
+          {{ item }}
+        </li>
+      </ul>
       <h2 class="reply">书评</h2>
       <li
         class="booklet-detail-list"
         v-for="(item, index) in booklistitem.reply"
         :key="index"
       >
-        <div>{{ item.name }}</div>
+        <h3>{{ item.name }}</h3>
         <p>{{ item.comment }}</p>
       </li>
     </div>
@@ -186,6 +199,22 @@ export default {
   &-list {
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.15);
     background-color: #fff;
+  }
+  .booklet-detail-info {
+    padding: 0 5px 5px 5px;
+    h2 {
+      font-size: 16px;
+      color: #007722;
+      margin-bottom: 15px;
+      margin-top: 15px;
+    }
+    p {
+      font-size: 16px;
+    }
+    ul > li {
+      font-size: 16px;
+      margin-bottom: 5px;
+    }
   }
 }
 </style>

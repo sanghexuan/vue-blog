@@ -2,28 +2,43 @@
   <div class="topics-list">
     <div
       class="topics-list-item"
-      v-for="(item, index) in topics"
+      v-for="(item, index) in topicsData"
       :key="index"
-      @click="gotoTopicsDetails(item)"
     >
       <div class="item-box">
         <div class="topics-info">
           <div style="display: flex; margin-bottom: 5px; align-items: center">
-            <img class="topics-img" :src="item.url" />
+            <img class="topics-img" :src="item.avatar" />
             <p class="topics-info-title">{{ item.username }}</p>
             <p>阅读量{{ item.visitCount }}</p>
           </div>
           <p>创建时间：{{ item.lastActiveTime }}</p>
-          <h4>{{ item.title }}</h4>
+          <h4 id="target">{{ item.title }}</h4>
           <div class="topics-info-btn">
-            <span> <icon-fa icon="share"></icon-fa></span>
-            <span class="action-active">
+            <el-dropdown trigger="click" size="small" placement="top-start">
+              <span> <icon-fa icon="share"></icon-fa></span>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item
+                  ><div @click="copy">复制内容</div></el-dropdown-item
+                >
+                <el-dropdown-item
+                  ><div @click="share">分享</div></el-dropdown-item
+                >
+              </el-dropdown-menu>
+            </el-dropdown>
+            <span class="action-active" @click="personReply(index)">
               <icon-fa icon="comment"></icon-fa>
             </span>
-            <span class="action-active">
-              <icon-fa icon="thumbs-up"></icon-fa>
+
+            <span class="action-active thump" @click="Up(index)">
+              <icon-fa :class="{ active: item.isActive }" icon="thumbs-up">
+              </icon-fa>
+              <div>{{ item.repliesCount }}</div>
             </span>
           </div>
+          <span v-if="item.visible"
+            >回复{{ item.visible }}<el-input :v-model="recommend"></el-input
+          ></span>
         </div>
       </div>
     </div>
@@ -44,15 +59,40 @@ export default {
   data() {
     return {
       data: [],
+      recommend: "",
+      reply: [],
     };
   },
+  computed: {
+    topicsData() {
+      let data = this.topics;
+      return data;
+    },
+  },
   methods: {
+    personReply(index) {
+      this.topicsData[index].visible = !this.topicsData[index].visible;
+    },
     gotoTopicsDetails(topicid) {
       this.$router.push({
         path: "/topics/topicsDetail/topicid" + topicid,
       });
     },
+    share() {
+      window.location.href =
+        "https://service.weibo.com/share/share.php?title=%E5%A4%A7%E5%AE%B6%E4%B8%8A%E7%8F%AD%E9%80%9A%E5%8B%A4%E6%97%B6%E9%97%B4%E9%83%BD%E5%A4%9A%E4%B9%85%E5%95%8A%5B%E6%80%9D%E8%80%83%5D%20https%3A%2F%2Fjuejin.cn%2Fpin%2F7094175439542812685%20(%E6%83%B3%E7%9C%8B%E6%9B%B4%E5%A4%9A%E6%B2%B8%E7%82%B9%EF%BC%8C%E4%B8%8B%E8%BD%BD%20%40%E6%8E%98%E9%87%91%E6%8A%80%E6%9C%AF%E7%A4%BE%E5%8C%BA%20App%3Ahttp%3A%2F%2Ft.cn%2FRL4EwOg%20)%20%23%E6%8E%98%E9%87%91%E6%B2%B8%E7%82%B9%23&url=https%3A%2F%2Fjuejin.cn%2Fpin%2F7094175439542812685&pic=https%3A%2F%2Fp26-passport.byteacctimg.com%2Fimg%2Fuser-avatar%2Fa6e2a380fa1b0a97cb5813a5c9d386fd~300x300.image#_loginLayer_1651743910716";
+    },
+    copy() {
+      let text = document.getElementById("target").innerText;
+      this.$copyText(text).then(() => {
+        this.$message("复制成功");
+      });
+    },
+    Up(index) {
+      this.topicsData[index].repliesCount++;
+    },
   },
+  created() {},
 };
 </script>
 
@@ -145,7 +185,12 @@ export default {
     }
   }
 }
-
+.active {
+  color: orangered;
+}
+.thump {
+  display: flex;
+}
 @media (max-width: 720px) {
   .topics-list {
     &-item {
