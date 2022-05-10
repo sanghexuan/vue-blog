@@ -10,9 +10,10 @@
       <sidebar-box title="文章标签" icon="tags" color="red">
         <sidebar-aditor slot="list"></sidebar-aditor>
       </sidebar-box>
-      <sidebar-box title="作者榜" icon="tags">
+      <!-- <sidebar-box title="日历" icon="tags">
         <sidebar-userlist slot="list"></sidebar-userlist>
-      </sidebar-box>
+      </sidebar-box> -->
+      <el-calendar v-model="value" class="aa"> </el-calendar>
     </div>
   </div>
 </template>
@@ -30,6 +31,7 @@ export default {
     return {
       articleDate: "",
       books: [],
+      value: new Date(),
     };
   },
   // 挂载的时候初始数据也要获取
@@ -49,4 +51,9 @@ export default {
 };
 </script>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+.page-sidebar {
+  width: 270px;
+  right: -28px;
+}
+</style>

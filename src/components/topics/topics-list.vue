@@ -36,9 +36,26 @@
               <div>{{ item.repliesCount }}</div>
             </span>
           </div>
-          <span v-if="item.visible"
-            >回复{{ item.visible }}<el-input :v-model="recommend"></el-input
-          ></span>
+          <el-button type="text" @click="openComment(index)">{{
+            item.replyVisible ? "收起评论" : "展开评论"
+          }}</el-button>
+          <span v-if="item.visible">
+            <div>
+              回复<el-input
+                :key="item.key"
+                autofocus
+                v-model="recommend"
+                @change="handleClick(index)"
+              ></el-input>
+            </div>
+          </span>
+          <div v-if="item.replyVisible">
+            <div class="reply" v-for="item in item.reply" :key="item.key">
+              <h4>{{ item.name }}</h4>
+              <p v-html="item.content"></p>
+              <p>{{ item.replyTime }}</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -49,6 +66,8 @@
 <script>
 import IconFa from "../icon/icon-fa";
 import NavButton from "../navbar/nav-button.vue";
+import axios from "axios";
+import { Loading } from "element-ui";
 
 export default {
   name: "topics-list",
@@ -60,18 +79,41 @@ export default {
     return {
       data: [],
       recommend: "",
-      reply: [],
+      topicsData: [],
+      update: false,
     };
   },
-  computed: {
-    topicsData() {
-      let data = this.topics;
-      return data;
-    },
-  },
+
   methods: {
+    openComment(index) {
+      this.topicsData[index].replyVisible =
+        !this.topicsData[index].replyVisible;
+      Loading.service();
+      axios({
+        method: "get",
+        url: `https://blog-maomao.herokuapp.com/api/hot/${this.topicsData[index].id}/`,
+        headers: {
+          "content-type": "application/json",
+        },
+      }).then((res) => {
+        let loadingInstance = Loading.service();
+        this.$nextTick(() => {
+          loadingInstance.close();
+        });
+        this.topicsData[index].reply = res?.data.comments;
+        this.topicsData = [...this.topicsData];
+      });
+      console.log(this.topicsData[index]);
+    },
+    handleClick(index) {
+      this.recommend = "";
+      this.topicsData[index].reply.title.push(this.recommend);
+    },
     personReply(index) {
+      this.topicsData.forEach((item) => (item.visible = false));
       this.topicsData[index].visible = !this.topicsData[index].visible;
+
+      this.topicsData = [...this.topicsData];
     },
     gotoTopicsDetails(topicid) {
       this.$router.push({
@@ -92,7 +134,24 @@ export default {
       this.topicsData[index].repliesCount++;
     },
   },
-  created() {},
+  watch: {
+    topics: {
+      handler(newVal) {
+        this.topicsData = newVal;
+      },
+      immediate: true,
+      deep: true,
+    },
+  },
+  created() {
+    axios({
+      method: "get",
+      url: "https://blog-maomao.herokuapp.com/api/hot/6262718079f90d94a6a0d2f5/",
+      headers: {
+        "content-type": "application/json",
+      },
+    });
+  },
 };
 </script>
 
@@ -196,6 +255,11 @@ export default {
     &-item {
       width: 50%;
     }
+  }
+}
+.reply {
+  p {
+    display: inline-block;
   }
 }
 </style>

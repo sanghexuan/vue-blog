@@ -2,11 +2,11 @@
   <ul class="sidebar-article">
     <li
       class="sidebar-article-item"
-      v-for="index in 5"
+      v-for="index in list"
       @click="articleDetails(index)"
       :key="index"
     >
-      <h4>文章标题{{ index }}</h4>
+      <h4>{{ index }}</h4>
     </li>
   </ul>
 </template>
@@ -17,6 +17,17 @@ import IconFa from "../icon/icon-fa";
 export default {
   name: "sidebar-article",
   components: { IconFa },
+  data() {
+    return {
+      list: [
+        "javascript基础",
+        "git实用操作",
+        "正则表达式",
+        "react路由笔记",
+        "Vue刷新页面四种方法",
+      ],
+    };
+  },
   methods: {
     articleDetails(id) {
       this.$router.push({

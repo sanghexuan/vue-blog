@@ -107,7 +107,7 @@
             :data="tableData"
             stripe
             border
-            height="620"
+            height="400"
             style="width: 100%"
           >
             <el-table-column fixed prop="title" label="标题" width="150">
@@ -139,9 +139,9 @@
           </el-table>
         </template>
       </el-tab-pane>
-      <el-tab-pane label="用户管理" name="five">
+      <!-- <el-tab-pane label="用户管理" name="five">
         <user-control></user-control>
-      </el-tab-pane>
+      </el-tab-pane> -->
     </el-tabs>
   </div>
 </template>

@@ -20,6 +20,7 @@ import {
   DropdownItem,
   Table,
   TableColumn,
+  Calendar,
 } from "element-ui";
 import "element-ui/lib/theme-chalk/index.css";
 import "view-design/dist/styles/iview.css";
@@ -52,6 +53,7 @@ Vue.use(DropdownMenu);
 Vue.use(DropdownItem);
 Vue.use(Table);
 Vue.use(TableColumn);
+Vue.use(Calendar);
 
 new Vue({
   store,
