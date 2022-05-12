@@ -49,7 +49,7 @@
               ></el-input>
             </div>
           </span>
-          <div v-if="item.replyVisible">
+          <div>
             <div class="reply" v-for="item in item.reply" :key="item.key">
               <h4>{{ item.name }}</h4>
               <p v-html="item.content"></p>
@@ -103,11 +103,18 @@ export default {
         this.topicsData[index].reply = res?.data.comments;
         this.topicsData = [...this.topicsData];
       });
-      console.log(this.topicsData[index]);
     },
     handleClick(index) {
+      let username = localStorage.getItem("username");
+
+      // this.topicsData[index].reply.title.push(this.recommend);
+      this.topicsData[index].reply.unshift({
+        name: username,
+        content: this.recommend,
+        replyTime: "•现在",
+      });
+      this.topicsData = [...this.topicsData];
       this.recommend = "";
-      this.topicsData[index].reply.title.push(this.recommend);
     },
     personReply(index) {
       this.topicsData.forEach((item) => (item.visible = false));

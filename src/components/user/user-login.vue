@@ -40,6 +40,7 @@ export default {
   methods: {
     open() {
       this.loading = true;
+      localStorage.setItem("username", this.name);
       axios({
         method: "post",
         url: "https://blog-maomao.herokuapp.com/api/users/login",
